@@ -25,3 +25,6 @@ No diretório do projeto, instale as dependências executando:
 
 ```bash
 npm install
+
+```bash
+npm run start
