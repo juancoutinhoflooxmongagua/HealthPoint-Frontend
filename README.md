@@ -1,8 +1,8 @@
 # HealthPoint - Plataforma de Voluntariado para Hospitais
 
-A **HealthPoint** é uma plataforma web onde hospitais podem gerenciar usuários administradores, criar e gerenciar vagas para voluntários, aprovar candidaturas, e acompanhar o desempenho dos voluntários.
+A **HealthPoint** é uma plataforma web que permite que hospitais gerenciem usuários, criem e administrem vagas para voluntários, aprovem candidaturas e acompanhem o desempenho dos voluntários.
 
-## Tecnologias Usadas
+## Tecnologias
 
 - **Frontend**: React, Bootstrap, Bootstrap Icons
 - **Backend**: Node.js, Express, Sequelize, MySQL
@@ -13,18 +13,17 @@ A **HealthPoint** é uma plataforma web onde hospitais podem gerenciar usuários
 
 ### Requisitos
 
-Certifique-se de ter as seguintes ferramentas instaladas:
-
-- [Node.js](https://nodejs.org/) (v16 ou superior)
+- [Node.js](https://nodejs.org/) (v16+)
 - [npm](https://www.npmjs.com/)
 - [MySQL](https://www.mysql.com/)
 
 ### Instalando Dependências
 
-No diretório do projeto, instale as dependências executando:
+1. No diretório do projeto, instale as dependências:
 
-```bash
-npm install
+   ```bash
+   npm install
 
-```bash
-npm run start
+  2. Iniciar o Servidor
+
+     npm start
