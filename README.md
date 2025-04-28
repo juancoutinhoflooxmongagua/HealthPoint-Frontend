@@ -27,4 +27,4 @@ A **HealthPoint** Ã© uma plataforma web que permite que hospitais gerenciem usuÃ
   2. Iniciar o Servidor
 
       ```bash
-         npm run start
+      npm run start
