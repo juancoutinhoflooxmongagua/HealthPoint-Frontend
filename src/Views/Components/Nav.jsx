@@ -1,15 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Link é necessário para navegação
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg navbar-light bg-success fixed-top">
       <div className="container-fluid">
-        <span className="navbar-brand mb-0 h1">Navbar</span>
-        <div className="navbar-nav">
-          <Link className="nav-link" to="/">Home</Link>
-          <Link className="nav-link" to="/register">Register</Link>
-          <Link className="nav-link" to="/login">Login</Link>
+        <Link className="navbar-brand text-white" to="/">
+          <i className="bi bi-hospital me-2" style={{ fontSize: "1.5rem" }}></i> HealthPoint
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link text-white" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-white" to="/register">Register</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-white" to="/login">Login</Link>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
