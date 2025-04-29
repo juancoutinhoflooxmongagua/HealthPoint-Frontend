@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import '../src/Assets/Css/index.css'
 
 import Nav from "./Views/Components/Nav";
 import Register from "./Views/Main/Register";
