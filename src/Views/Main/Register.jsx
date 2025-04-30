@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -8,6 +9,8 @@ export default function Register() {
     user_password: "",
     user_phone: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,10 +22,14 @@ export default function Register() {
     axios
       .post("http://localhost:8080/auth/register", form)
       .then((res) => {
-        console.log(res.data);
+        const token = res.data.token
+        alert("Registrado com sucesso!");
+        localStorage.setItem("token", token)
+        navigate("/login");
       })
       .catch((err) => {
         console.error("Erro ao registrar:", err);
+        alert("Erro ao registrar. Tente novamente.");
       });
   };
 

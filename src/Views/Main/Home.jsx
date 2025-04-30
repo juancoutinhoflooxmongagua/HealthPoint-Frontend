@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import hospitalImage from "../../Assets/Images/Hospital room-bro.png";
 import VolunteerImage from "../../Assets/Images/Volunteering-bro.png";
+import axios from "axios";
 
 export default function Home() {
+  const [user, setUser] = useState(null);
+  const token = localStorage.getItem('token'); 
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get('http://localhost:8080/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        })
+        .then((response) => {
+          setUser(response.data); 
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar dados do usuário:", error);
+        });
+    }
+  }, [token]);
+
   return (
     <div className="container">
       {/* Banner principal */}
@@ -12,6 +33,12 @@ export default function Home() {
         </h2>
         <p className="text-muted mb-0 small">Conectando voluntários e hospitais em uma só missão: salvar vidas.</p>
       </div>
+
+      {user && (
+        <div className="alert alert-success text-center" role="alert">
+          <strong>Olá, {user.user_name}!</strong> Estamos felizes por tê-lo conosco na missão de salvar vidas.
+        </div>
+      )}
 
       <div className="row row-cols-1 row-cols-sm-2 g-4">
         <div className="col">
@@ -55,7 +82,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* CTA final */}
       <div className="bg-light text-center p-4 mt-5 rounded shadow-sm">
         <h4 className="text-success fw-bold mb-2">Faça parte desta missão!</h4>
         <p className="text-muted small mb-0">Juntos, podemos fazer a diferença em milhares de vidas.</p>
