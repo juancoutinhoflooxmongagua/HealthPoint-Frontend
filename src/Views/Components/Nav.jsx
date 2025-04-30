@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function Nav() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-success fixed-top py-2">
+    <nav className="navbar navbar-expand-lg navbar-light bg-success fixed-top py-2 shadow-sm">
       <div className="container-fluid">
-        <Link className="navbar-brand text-white d-flex align-items-center" to="/" style={{ fontSize: "1rem" }}>
-          <i className="bi bi-hospital me-1"></i> HealthPoint
+        <Link className="navbar-brand text-white d-flex align-items-center" to="/">
+          <i className="bi bi-hospital me-2" style={{ fontSize: "1.3rem" }}></i>HealthPoint
         </Link>
         <button
           className="navbar-toggler"
@@ -20,15 +20,21 @@ export default function Nav() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto small">
+          <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/">Home</Link>
+              <Link className="nav-link text-white" to="/">
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/register">Register</Link>
+              <Link className="nav-link text-white" to="/register">
+                Register
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/login">Login</Link>
+              <Link className="nav-link text-white" to="/login">
+                Login
+              </Link>
             </li>
           </ul>
         </div>
