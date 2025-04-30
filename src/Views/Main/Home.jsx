@@ -53,6 +53,7 @@ export default function Home() {
       )}
 
       {!user && (
+      <div>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
           <div className="col">
             <div className="card h-100 border-0 shadow-lg bg-primary text-white">
@@ -78,11 +79,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-primary text-center p-4 mt-5 rounded shadow-lg">
-            <h4 className="text-white fw-bold mb-2">Faça parte desta missão!</h4>
-            <p className="text-light small mb-0">Juntos, podemos fazer a diferença em milhares de vidas.</p>
-          </div>
+         
         </div>
+
+      <div className="bg-primary text-center p-4 mt-5 rounded shadow-lg">
+        <h4 className="text-white fw-bold mb-2">Faça parte desta missão!</h4>
+        <p className="text-light small mb-0">Juntos, podemos fazer a diferença em milhares de vidas.</p>
+        </div>
+      </div>
       )}
     </div>
   );

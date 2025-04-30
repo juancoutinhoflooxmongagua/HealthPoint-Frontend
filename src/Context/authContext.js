@@ -16,7 +16,10 @@ export function AuthProvider({ children }) {
           },
         })
         .then((res) => setUser(res.data))
-        .catch(() => setUser(null));
+        .catch(() => {
+          setUser(null); 
+          localStorage.removeItem("token"); 
+        });
     }
   }, [token]);
 

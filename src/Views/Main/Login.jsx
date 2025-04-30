@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/authContext";
 
 export default function Login() {
+  const { setUser } = useContext(AuthContext);
   const [form, setForm] = useState({
     user_email: "",
     user_password: "",
@@ -20,7 +22,8 @@ export default function Login() {
     axios
       .post("http://localhost:8080/auth/login", form)
       .then((res) => {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.token); 
+        setUser(res.data.user); 
         navigate("/"); 
       })
       .catch((err) => {
