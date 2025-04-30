@@ -1,28 +1,39 @@
 import React from "react";
+
 export default function Register() {
   return (
-    <div>
-    <form className="mt-5 p-4 bg-white shadow-lg rounded" style={{ maxWidth: "400px", margin: "auto" }}>
-      <h2 className="text-center mb-4">Registro</h2>
-      <div className="mb-3">
-        <label htmlFor="name" className="form-label">Nome</label>
-        <input type="text" id="name" className="form-control" placeholder="Nome" />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="email" className="form-label">Email</label>
-        <input type="email" id="email" className="form-control" placeholder="Email" />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label">Senha</label>
-        <input type="password" id="password" className="form-control" placeholder="Senha" />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="phone" className="form-label">Telefone</label>
-        <input type="text" id="phone" className="form-control" placeholder="Telefone" />
-      </div>
-      <button type="submit" className="btn btn-primary w-100 mt-3">Registrar</button>
-    </form>
+    <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div className="card shadow-lg border-0" style={{ maxWidth: "420px", width: "100%" }}>
+        <div className="card-body p-4">
+          <h2 className="text-center text-success mb-4 fw-bold">Criar Conta</h2>
 
+          <form>
+            <div className="form-floating mb-3">
+              <input type="text" className="form-control" id="name" placeholder="Nome" />
+              <label htmlFor="name" className="text-muted">Nome</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input type="email" className="form-control" id="email" placeholder="Email" />
+              <label htmlFor="email" className="text-muted">Email</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input type="password" className="form-control" id="password" placeholder="Senha" />
+              <label htmlFor="password" className="text-muted">Senha</label>
+            </div>
+
+            <div className="form-floating mb-4">
+              <input type="text" className="form-control" id="phone" placeholder="Telefone" />
+              <label htmlFor="phone" className="text-muted">Telefone</label>
+            </div>
+
+            <button type="submit" className="btn btn-success w-100 py-2 fw-semibold">
+              Registrar
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
