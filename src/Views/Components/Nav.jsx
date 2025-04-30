@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Nav() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-success fixed-top py-2 shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light bg-primary fixed-top py-2 shadow-sm">
       <div className="container-fluid">
         <Link className="navbar-brand text-white d-flex align-items-center" to="/">
           <i className="bi bi-hospital me-2" style={{ fontSize: "1.3rem" }}></i>HealthPoint
