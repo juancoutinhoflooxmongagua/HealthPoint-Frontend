@@ -1,12 +1,29 @@
 import React from "react";
 
 export default function Register() {
-    return (
-        <form>
-            <input type="text" placeholder="Nome" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Senha" />
-            <button type="submit">Registrar</button>
-        </form>
-    );
+  return (
+    <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div className="card shadow-lg border-0" style={{ maxWidth: "420px", width: "100%" }}>
+        <div className="card-body">
+          <h2 className="text-center text-success mb-4 fw-bold">Login</h2>
+
+          <form>
+            <div className="form-floating mb-3">
+              <input type="email" className="form-control" id="email" placeholder="Email" />
+              <label htmlFor="email" className="text-muted">Email</label>
+            </div>
+
+            <div className="form-floating mb-4">
+              <input type="password" className="form-control" id="password" placeholder="Senha" />
+              <label htmlFor="password" className="text-muted">Senha</label>
+            </div>
+
+            <button type="submit" className="btn btn-success w-100 py-2 fw-semibold">
+              Entrar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
