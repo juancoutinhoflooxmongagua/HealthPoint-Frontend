@@ -58,6 +58,13 @@ export default function Nav() {
                     Meu Perfil
                   </Link>
                 </li>
+
+                <li>
+                  <Link className="nav-link text-white" to="/SearchUsers">
+                  Pesquisar usuários
+                  </Link>
+                </li>
+
                 <li className="nav-item">
                   <button className="btn btn-outline-light" onClick={handleLogout}>
                     Logout
