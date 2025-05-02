@@ -36,7 +36,7 @@ export default function Nav() {
               </Link>
             </li>
 
-            {!user && ( 
+            {!user && (
               <>
                 <li className="nav-item">
                   <Link className="nav-link text-white" to="/register">
@@ -51,15 +51,19 @@ export default function Nav() {
               </>
             )}
 
-            {user && ( 
-              <li className="nav-item">
-                <button
-                  className="btn btn-outline-light"
-                  onClick={handleLogout} 
-                >
-                  Logout
-                </button>
-              </li>
+            {user && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link text-white" to="/UserProfile">
+                    Meu Perfil
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-outline-light" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </li>
+              </>
             )}
           </ul>
         </div>
