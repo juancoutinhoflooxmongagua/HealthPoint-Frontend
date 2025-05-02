@@ -11,6 +11,7 @@ import Login from "./Views/Main/Login";
 import Home from "./Views/Main/Home";
 import UserProfile from "./Views/Main/User/UserProfile";
 import Footer from "./Views/Components/Footer";
+import SearchUsers from "../src/Views/Main/User/Admin/SearchUsers"
 
 import { AuthProvider } from "./Context/authContext";   
 
@@ -26,6 +27,7 @@ export default function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/UserProfile" element={<UserProfile/>} />
+              <Route path="/SearchUsers" element={<SearchUsers/>} />
             </Routes>
           </div>
           <Footer />
