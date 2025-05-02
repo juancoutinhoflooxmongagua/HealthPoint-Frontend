@@ -9,9 +9,10 @@ import Nav from "./Views/Components/Nav";
 import Register from "./Views/Main/Register";
 import Login from "./Views/Main/Login";
 import Home from "./Views/Main/Home";
+import UserProfile from "./Views/Main/User/UserProfile";
 import Footer from "./Views/Components/Footer";
 
-import { AuthProvider } from "./Context/authContext"; // importa o contexto
+import { AuthProvider } from "./Context/authContext";   
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/UserProfile" element={<UserProfile/>} />
             </Routes>
           </div>
           <Footer />
