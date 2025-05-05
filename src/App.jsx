@@ -9,6 +9,7 @@ import Nav from "./Views/Components/Nav";
 import Register from "./Views/Main/Register";
 import Login from "./Views/Main/Login";
 import Home from "./Views/Main/Home";
+import Jobs from "./Views/Main/Jobs/Jobs";
 import UserProfile from "./Views/Main/User/UserProfile";
 import Footer from "./Views/Components/Footer";
 import SearchUsers from "../src/Views/Main/User/Admin/SearchUsers"
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/UserProfile" element={<UserProfile/>} />
               <Route path="/SearchUsers" element={<SearchUsers/>} />
+              <Route path="/Jobs" element={<Jobs></Jobs>}></Route>
             </Routes>
           </div>
           <Footer />

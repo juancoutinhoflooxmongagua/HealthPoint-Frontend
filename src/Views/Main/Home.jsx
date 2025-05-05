@@ -30,7 +30,7 @@ export default function Home() {
                   <h5 className="card-title fw-semibold">Ver Vagas</h5>
                   <p className="card-text text-light mb-3">Confira as vagas disponíveis para voluntários em hospitais.</p>
                   <div className="mt-auto">
-                    <a href="/vacancies" className="btn btn-outline-light rounded-pill btn-md px-4">Ver vagas</a>
+                    <a href="/Jobs" className="btn btn-outline-light rounded-pill btn-md px-4">Ver vagas</a>
                   </div>
                 </div>
               </div>
