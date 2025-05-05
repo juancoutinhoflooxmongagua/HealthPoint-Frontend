@@ -37,8 +37,20 @@ body {
     border-radius: 10px;
   }
   
-  /* Barra de rolagem vertical */
   ::-webkit-scrollbar-vertical {
     width: 10px; /* Largura da barra vertical */
   }
-  
+
+  .main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
