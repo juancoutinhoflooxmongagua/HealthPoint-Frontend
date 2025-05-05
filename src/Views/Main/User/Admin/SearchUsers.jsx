@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import UsersTradutor from "../../../Components/i18n/usersTradutor";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function UsersOfSystem() {
@@ -45,7 +46,7 @@ export default function UsersOfSystem() {
                   <div className="card-body">
                     <h5 className="card-title mb-2 text-primary">{user.user_name}</h5>
                     <p className="mb-1"><strong>Email:</strong> {user.user_email}</p>
-                    <p className="mb-0"><strong>Função:</strong> {user.user_role}</p>
+                    <p className="mb-0"><strong>Função:</strong> <UsersTradutor user={user.user_role} /></p>
                   </div>
                 </div>
               </div>
