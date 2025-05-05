@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../Context/authContext";
-export default function UserProfile() {
+import UsersTradutor from "../../Components/i18n/usersTradutor.jsx"; // Corrigido o nome
 
-    
-  const { user } = useContext(AuthContext); 
+export default function UserProfile() {
+  const { user } = useContext(AuthContext);
+
   return (
-    
     <main>
       <h1>Perfil</h1>
 
@@ -14,7 +14,7 @@ export default function UserProfile() {
           <div className="card-body">
             <div className="row">
               <div className="col-sm-3">
-                <p className="mb-0">Full Name</p>
+                <p className="mb-0">Nome: </p>
               </div>
               <div className="col-sm-9">
                 <p className="text-muted mb-0">{user.user_name}</p>
@@ -23,7 +23,7 @@ export default function UserProfile() {
             <hr />
             <div className="row">
               <div className="col-sm-3">
-                <p className="mb-0">Email</p>
+                <p className="mb-0">Email: </p>
               </div>
               <div className="col-sm-9">
                 <p className="text-muted mb-0">{user.user_email}</p>
@@ -32,7 +32,7 @@ export default function UserProfile() {
             <hr />
             <div className="row">
               <div className="col-sm-3">
-                <p className="mb-0">Phone</p>
+                <p className="mb-0">Telefone: </p>
               </div>
               <div className="col-sm-9">
                 <p className="text-muted mb-0">{user.user_phone}</p>
@@ -41,10 +41,12 @@ export default function UserProfile() {
             <hr />
             <div className="row">
               <div className="col-sm-3">
-                <p className="mb-0">Role</p>
+                <p className="mb-0">Nível de Usuário:</p>
               </div>
               <div className="col-sm-9">
-                <p className="text-muted mb-0">{user.user_role}</p>
+                <p className="text-muted mb-0">
+                  <UsersTradutor user={user.user_role} />
+                </p>
               </div>
             </div>
           </div>
