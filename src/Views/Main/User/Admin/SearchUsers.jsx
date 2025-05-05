@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function UsersOfSystem() {
   const [users, setUsers] = useState([]);
@@ -21,7 +22,7 @@ export default function UsersOfSystem() {
       })
       .then((res) => {
         setUsers(res.data);
-        setError(null); 
+        setError(null);
       })
       .catch((err) => {
         console.error("Erro ao buscar usuários:", err);
@@ -30,20 +31,30 @@ export default function UsersOfSystem() {
   }, [token]);
 
   return (
-    <main>
-      <h1>Usuários do Sistema</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>} 
-      {users.length > 0 ? (
-        <ul>
-          {users.map((user) => (
-            <li key={user.user_id}>
-              {user.user_name} — {user.user_email} — {user.user_role}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Não há usuários para exibir.</p>
-      )}
+    <main className="bg-light py-5 min-vh-100">
+      <div className="container">
+        <h1 className="mb-4 text-center text-dark">Usuários do Sistema</h1>
+
+        {error && <div className="alert alert-danger text-center">{error}</div>}
+
+        {users.length > 0 ? (
+          <div className="row">
+            {users.map((user) => (
+              <div className="col-md-6 col-lg-4 mb-4" key={user.user_id}>
+                <div className="card border-0 shadow-sm h-100">
+                  <div className="card-body">
+                    <h5 className="card-title mb-2 text-primary">{user.user_name}</h5>
+                    <p className="mb-1"><strong>Email:</strong> {user.user_email}</p>
+                    <p className="mb-0"><strong>Função:</strong> {user.user_role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted">Não há usuários para exibir.</p>
+        )}
+      </div>
     </main>
   );
 }

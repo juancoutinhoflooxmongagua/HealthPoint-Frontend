@@ -9,7 +9,7 @@ export default function UserProfile() {
     <main>
       <h1>Perfil</h1>
 
-      <div className="col-lg-8">
+      <div className="col-lg-8 center">
         <div className="card mb-4">
           <div className="card-body">
             <div className="row">
