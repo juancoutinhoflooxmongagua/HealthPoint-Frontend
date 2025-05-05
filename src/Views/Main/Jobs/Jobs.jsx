@@ -53,20 +53,26 @@ export default function Jobs() {
           {jobs.map((job) => (
             <div key={job.job_id} className="col">
               <div className="card h-100 shadow-sm">
-                <div className="card-body">
+                <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{job.job_title}</h5>
                   <p className="card-text">{job.job_description}</p>
-                  <p className="text-muted">Hospital: {job.hospital_name}</p>
-                  <p className="text-muted">Pontos: {job.job_points}</p>
-                  <button
-                    className="btn btn-primary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      alert(`Você se candidatou para a vaga de ${job.job_title}`);
-                    }}
-                  >
-                    Aplicar
-                  </button>
+                  <p className="text-muted">
+                    <i className="fas fa-hospital-alt me-2"></i>{job.hospital_name}
+                  </p>
+                  <p className="text-muted">
+                    <i className="fas fa-star me-2"></i>{job.job_points} Pontos
+                  </p>
+                  <div className="mt-auto">
+                    <button
+                      className="btn btn-primary w-100 p-2"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        alert(`Você se candidatou para a vaga de ${job.job_title}`);
+                      }}
+                    >
+                      <i className="fas fa-paper-plane me-2"></i> Aplicar
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
