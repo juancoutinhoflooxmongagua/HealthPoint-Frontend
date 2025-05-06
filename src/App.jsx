@@ -13,8 +13,9 @@ import Jobs from "./Views/Main/Jobs/Jobs";
 import UserProfile from "./Views/Main/User/UserProfile";
 import Footer from "./Views/Components/Footer";
 import SearchUsers from "../src/Views/Main/User/Admin/SearchUsers"
-
+import Application from "./Views/application";
 import { AuthProvider } from "./Context/authContext";   
+import DashboardAdmin from "./Views/Main/User/Admin/DashboardAdmin";
 
 export default function App() {
   return (
@@ -30,6 +31,8 @@ export default function App() {
               <Route path="/UserProfile" element={<UserProfile/>} />
               <Route path="/SearchUsers" element={<SearchUsers/>} />
               <Route path="/Jobs" element={<Jobs></Jobs>}></Route>
+              <Route path="/Application" element={<Application/>}></Route>
+              <Route path="/DashboardAdmin" element={<DashboardAdmin></DashboardAdmin>}></Route>
             </Routes>
           </div>
           <Footer />

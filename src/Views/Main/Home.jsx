@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../Context/authContext"; 
 import hospitalImage from "../../Assets/Images/Hospital room-bro.png";
 import VolunteerImage from "../../Assets/Images/Volunteering-bro.png";
-
+import DashboardAdmin from "./User/Admin/DashboardAdmin";
 export default function Home() {
   const { user } = useContext(AuthContext); 
 
@@ -21,6 +21,12 @@ export default function Home() {
           <div className="alert alert-primary text-center" role="alert">
             <strong>Olá, {user.user_name}!</strong> Estamos felizes por tê-lo conosco na missão de salvar vidas.
           </div>
+
+
+          <DashboardAdmin></DashboardAdmin>
+
+
+          <h3 className="mt-2">Painel De usuário</h3>
 
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             <div className="col">
@@ -43,7 +49,7 @@ export default function Home() {
                   <h5 className="card-title fw-semibold">Se tornar um hospital</h5>
                   <p className="card-text text-light mb-3">Registre seu hospital na plataforma e receba voluntários.</p>
                   <div className="mt-auto">
-                    <a href="/become-hospital" className="btn btn-outline-light rounded-pill btn-md px-4">Quero ser hospital</a>
+                    <a href="/DashboardAdmin" className="btn btn-outline-light rounded-pill btn-md px-4">Quero ser hospital</a>
                   </div>
                 </div>
               </div>
