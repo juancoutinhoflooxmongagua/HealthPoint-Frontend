@@ -26,6 +26,7 @@ export default function App() {
       <Router>
         <div className="main bg-light">
           <Nav />
+          <div className="rgb-tape"></div>
           <div className="container bg-light mt-5 pt-3">
             <Routes>
               <Route path="/" element={<Home />} />
