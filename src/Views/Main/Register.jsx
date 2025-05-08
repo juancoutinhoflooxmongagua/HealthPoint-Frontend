@@ -20,7 +20,7 @@ export default function Register() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8080/auth/register", form)
+      .post("https://healthpoint-backend-production.up.railway.app/auth/register", form)
       .then((res) => {
         const token = res.data.token;
         alert("Registrado com sucesso!");

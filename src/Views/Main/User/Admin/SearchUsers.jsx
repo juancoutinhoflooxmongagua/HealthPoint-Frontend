@@ -18,7 +18,7 @@ export default function UsersOfSystem() {
     }
 
     axios
-      .get("http://localhost:8080/users", {
+      .get("https://healthpoint-backend-production.up.railway.app/users", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

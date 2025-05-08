@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (token) {
       axios
-        .get("http://localhost:8080/profile", {
+        .get("https://healthpoint-backend-production.up.railway.app/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

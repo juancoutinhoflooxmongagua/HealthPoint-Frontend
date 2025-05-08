@@ -20,7 +20,7 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8080/auth/login", form)
+      .post("https://healthpoint-backend-production.up.railway.app/auth/login", form)
       .then((res) => {
         localStorage.setItem("token", res.data.token); 
         setUser(res.data.user); 
