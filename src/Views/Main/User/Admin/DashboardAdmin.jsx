@@ -25,7 +25,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-plus-square fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Criar Vaga</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/Jobs/create")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/Jobs/NewJob")}>
                 Acessar
               </button>
             </div>

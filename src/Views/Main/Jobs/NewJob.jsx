@@ -8,7 +8,7 @@ export default function NewJob() {
         <div>
             Cadastrar Novo Trabalho 
 
-            <form action="http://localhost:8080/job" method="POST">
+            <form action="https://healthpoint-backend-production.up.railway.app/job" method="POST">
                 <div className="form-floating mb-3">
                     <input type="text" className="form-control" name="job_title" id="job_title" placeholder="Título do Trabalho" />
                     <label htmlFor="job_title">Título do Trabalho</label>

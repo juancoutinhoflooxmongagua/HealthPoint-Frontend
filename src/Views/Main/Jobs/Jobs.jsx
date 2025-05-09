@@ -17,7 +17,7 @@ export default function Jobs() {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/jobs", {
+        const response = await axios.get("https://healthpoint-backend-production.up.railway.app/jobs", {
           headers: {
             "Authorization": `Bearer ${token}`,
           },
