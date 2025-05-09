@@ -16,8 +16,7 @@ import SearchUsers from "../src/Views/Main/User/Admin/SearchUsers";
 import Application from "./Views/application";
 import { AuthProvider } from "./Context/authContext";   
 import DashboardAdmin from "./Views/Main/User/Admin/DashboardAdmin";
-
-// Importando o ActionButtons
+import NewJob from "./Views/Main/Jobs/NewJob";
 import ActionButtons from "./Views/Components/ActionButtons";
 
 export default function App() {
@@ -35,6 +34,7 @@ export default function App() {
               <Route path="/UserProfile" element={<UserProfile />} />
               <Route path="/SearchUsers" element={<SearchUsers />} />
               <Route path="/Jobs" element={<Jobs />} />
+              <Route path="/NewJob" element={<NewJob />} />
               <Route path="/Application" element={<Application />} />
               <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
             </Routes>
