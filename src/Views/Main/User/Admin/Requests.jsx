@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Statistics() {
+export default function Requirements() {
     return (
         <main className="container mt-5">
             <h1 className="text-center text-primary mb-4" style={{ fontWeight: '600' }}>Estatísticas do Sistema</h1>

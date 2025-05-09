@@ -25,7 +25,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-plus-square fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Criar Vaga</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/new-job")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/NewJob")}>
                 Acessar
               </button>
             </div>
@@ -37,7 +37,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-person-lines-fill fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Ver Usuários</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/search-users")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/SearchUsers")}>
                 Acessar
               </button>
             </div>
@@ -49,7 +49,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-file-earmark-text fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Ver Aplicações</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/applications")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/Requirements")}>
                 Acessar
               </button>
             </div>
@@ -73,7 +73,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-house-door fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Criar Novo Hospital</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/new-hospital")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/NewHospital")}>
                 Acessar
               </button>
             </div>
@@ -85,7 +85,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-hospital fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Gerenciar Hospitais</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/hospital/index")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/Hospital")}>
                 Acessar
               </button>
             </div>

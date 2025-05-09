@@ -18,6 +18,10 @@ import { AuthProvider } from "./Context/authContext";
 import DashboardAdmin from "./Views/Main/User/Admin/DashboardAdmin";
 import NewJob from "./Views/Main/Jobs/NewJob";
 import ActionButtons from "./Views/Components/ActionButtons";
+import Statistics from "./Views/Main/User/Admin/Statistics";
+import NewHospital from "./Views/Main/User/Admin/Hospital/NewHospital";
+import Hospital from "./Views/Main/User/Admin/Hospital/Hospital";
+import Leaderboard from "./Views/Main/Jobs/Leaderboard";
 
 export default function App() {
   return (
@@ -37,6 +41,10 @@ export default function App() {
               <Route path="/NewJob" element={<NewJob />} />
               <Route path="/Application" element={<Application />} />
               <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
+              <Route path="/Statistics" element={<Statistics />} />
+              <Route path="/NewHospital" element={<NewHospital />} />
+              <Route path="/Hospital" element={<Hospital />} />
+              <Route path="/Leaderboard" element={<Leaderboard />} />
             </Routes>
           </div>
           <Footer />
