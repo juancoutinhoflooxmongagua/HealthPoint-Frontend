@@ -49,7 +49,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-file-earmark-text fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Ver Aplicações</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/Requirements")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/Requests")}>
                 Acessar
               </button>
             </div>
@@ -97,7 +97,7 @@ export default function Dashboard() {
             <div className="card-body text-center">
               <i className="bi bi-graph-up fs-1 text-primary"></i>
               <h5 className="card-title mt-2 text-primary">Ver Estatísticas</h5>
-              <button className="btn btn-primary mt-2" onClick={() => navigate("/statistics")}>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/Statistics")}>
                 Acessar
               </button>
             </div>

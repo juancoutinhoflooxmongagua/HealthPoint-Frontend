@@ -22,7 +22,7 @@ import Statistics from "./Views/Main/User/Admin/Statistics";
 import NewHospital from "./Views/Main/User/Admin/Hospital/NewHospital";
 import Hospital from "./Views/Main/User/Admin/Hospital/Hospital";
 import Leaderboard from "./Views/Main/Jobs/Leaderboard";
-
+import Requests from "./Views/Main/User/Admin/Requests";
 export default function App() {
   return (
     <AuthProvider>
@@ -32,12 +32,19 @@ export default function App() {
           <div className="rgb-tape"></div>
           <div className="container bg-light mt-5 pt-3">
             <Routes>
+              
+              {/* Rotas Públicas */}
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+
+              {/* Rotas de Voluntários */}
               <Route path="/UserProfile" element={<UserProfile />} />
-              <Route path="/SearchUsers" element={<SearchUsers />} />
               <Route path="/Jobs" element={<Jobs />} />
+
+              {/* Rotas de administrador */}
+              <Route path="/Jobs/:id" element={<Jobs />} />
+              <Route path="/SearchUsers" element={<SearchUsers />} />              
               <Route path="/NewJob" element={<NewJob />} />
               <Route path="/Application" element={<Application />} />
               <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
@@ -45,6 +52,7 @@ export default function App() {
               <Route path="/NewHospital" element={<NewHospital />} />
               <Route path="/Hospital" element={<Hospital />} />
               <Route path="/Leaderboard" element={<Leaderboard />} />
+              <Route path="/Requests" element={<Requests />} />
             </Routes>
           </div>
           <Footer />
