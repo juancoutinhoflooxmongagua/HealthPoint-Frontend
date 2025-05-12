@@ -23,6 +23,8 @@ import NewHospital from "./Views/Main/User/Admin/Hospital/NewHospital";
 import Hospital from "./Views/Main/User/Admin/Hospital/Hospital";
 import Leaderboard from "./Views/Main/Jobs/Leaderboard";
 import Requests from "./Views/Main/User/Admin/Requests";
+import HospitalLogin from "./Views/Main/User/Admin/Hospital/HospitalLogin";
+
 export default function App() {
   return (
     <AuthProvider>
@@ -37,7 +39,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-
+              <Route path="/HospitalLogin" element={<HospitalLogin />}></Route>
               {/* Rotas de Voluntários */}
               <Route path="/UserProfile" element={<UserProfile />} />
               <Route path="/Jobs" element={<Jobs />} />

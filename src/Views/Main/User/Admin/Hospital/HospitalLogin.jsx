@@ -8,7 +8,7 @@ export default function HospitalLogin() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    hospital_email: "",
+    hospital_id: "",
     hospital_password: ""
   });
 
@@ -25,13 +25,13 @@ export default function HospitalLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://healthpoint-backend-production.up.railway.app/hospitals/login", formData);
+      const response = await axios.post("https://healthpoint-backend-production.up.railway.app/hospital/login", formData);
       const { hospital_id, token } = response.data;
 
       setHospital({ hospital_id, token });
       localStorage.setItem("hospitalToken", token);
 
-      navigate("/hospital/dashboard");
+      navigate("/Home");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || "Erro no login");
@@ -45,13 +45,13 @@ export default function HospitalLogin() {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="hospital_email" className="form-label">E-mail</label>
+              <label htmlFor="hospital_id" className="form-label">ID do Hospital</label>
               <input
-                type="email"
+                type="id"
                 className="form-control"
-                id="hospital_email"
-                name="hospital_email"
-                value={formData.hospital_email}
+                id="hospital_id"
+                name="hospital_id"
+                value={formData.hospital_id}
                 onChange={handleChange}
                 required
               />
