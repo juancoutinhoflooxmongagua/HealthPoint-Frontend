@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 export default function NewHospital() {
     const [hospitalData, setHospitalData] = useState({
@@ -6,6 +7,28 @@ export default function NewHospital() {
         hospital_address: "",
         hospital_phone: ""
     });
+
+    const [hospitals, setHospitals] = useState([]);
+    const [error, setError] = useState(null);
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        if (!token) {
+            setError("Token não encontrado.");
+            return;
+        }
+
+        axios.get("https://healthpoint-backend-production.up.railway.app/hospital", {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+            setHospitals(res.data);
+            setError(null);
+        })
+        .catch(() => {
+            setError("Erro ao buscar hospitais.");
+        });
+    }, [token]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,12 +40,34 @@ export default function NewHospital() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Dados do hospital:", hospitalData);
+
+        if (!token) {
+            setError("Token não encontrado.");
+            return;
+        }
+
+        axios.post("https://healthpoint-backend-production.up.railway.app/hospital", hospitalData, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+            alert("Hospital cadastrado com sucesso!");
+            setHospitalData({
+                hospital_name: "",
+                hospital_address: "",
+                hospital_phone: ""
+            });
+        })
+        .catch(() => {
+            alert("Erro ao cadastrar hospital.");
+        });
     };
 
     return (
         <main className="container mt-5">
             <h1 className="text-center text-primary mb-4" style={{ fontWeight: '600' }}>Cadastrar novo Hospital</h1>
+            
+            {error && <div className="alert alert-danger text-center">{error}</div>}
+
             <div className="card shadow-sm rounded-3 border-0">
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
