@@ -10,14 +10,19 @@ export function HospitalAuthProvider({ children }) {
   useEffect(() => {
     if (token) {
       axios
-        .get("https://healthpoint-backend-production.up.railway.app/hospitals/profile", {
-          headers: { Authorization: `Bearer ${token}` },
+        .get("https://healthpoint-backend-production.up.railway.app/hospital/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then((res) => setHospital(res.data))
-        .catch(() => {
+        .catch((err) => {
+          console.error("Erro no backend:", err); // Exibe mais detalhes do erro
           setHospital(null);
-          localStorage.removeItem("hospitalToken");
+          localStorage.removeItem("hospitalToken"); // Limpa o token caso a autenticação falhe
         });
+    } else {
+      setHospital(null); // Limpa o hospital caso não haja token
     }
   }, [token]);
 

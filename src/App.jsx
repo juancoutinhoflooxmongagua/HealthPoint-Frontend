@@ -24,43 +24,42 @@ import Hospital from "./Views/Main/User/Admin/Hospital/Hospital";
 import Leaderboard from "./Views/Main/Jobs/Leaderboard";
 import Requests from "./Views/Main/User/Admin/Requests";
 import HospitalLogin from "./Views/Main/User/Admin/Hospital/HospitalLogin";
-
+import { HospitalAuthProvider } from "./Context/hospitalContext";
+import HospitalProfile from "./Views/Main/User/Admin/Hospital/HospitalProfile";
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="main bg-light">
-          <Nav />
-          <div className="rgb-tape"></div>
-          <div className="container bg-light mt-5 pt-3">
-            <Routes>
-              
-              {/* Rotas Públicas */}
-              <Route path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/HospitalLogin" element={<HospitalLogin />}></Route>
-              {/* Rotas de Voluntários */}
-              <Route path="/UserProfile" element={<UserProfile />} />
-              <Route path="/Jobs" element={<Jobs />} />
-
-              {/* Rotas de administrador */}
-              <Route path="/Jobs/:id" element={<Jobs />} />
-              <Route path="/SearchUsers" element={<SearchUsers />} />              
-              <Route path="/NewJob" element={<NewJob />} />
-              <Route path="/Application" element={<Application />} />
-              <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
-              <Route path="/Statistics" element={<Statistics />} />
-              <Route path="/NewHospital" element={<NewHospital />} />
-              <Route path="/Hospital" element={<Hospital />} />
-              <Route path="/Leaderboard" element={<Leaderboard />} />
-              <Route path="/Requests" element={<Requests />} />
-            </Routes>
+      <HospitalAuthProvider>
+        <Router>
+          <div className="main bg-light">
+            <Nav />
+            <div className="rgb-tape"></div>
+            <div className="container bg-light mt-5 pt-3">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/HospitalLogin" element={<HospitalLogin />} />
+                <Route path="/UserProfile" element={<UserProfile />} />
+                <Route path="/Jobs" element={<Jobs />} />
+                <Route path="/Jobs/:id" element={<Jobs />} />
+                <Route path="/SearchUsers" element={<SearchUsers />} />
+                <Route path="/NewJob" element={<NewJob />} />
+                <Route path="/Application" element={<Application />} />
+                <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
+                <Route path="/Statistics" element={<Statistics />} />
+                <Route path="/NewHospital" element={<NewHospital />} />
+                <Route path="/Hospital" element={<Hospital />} />
+                <Route path="/Leaderboard" element={<Leaderboard />} />
+                <Route path="/Requests" element={<Requests />} />
+                <Route path="/HospitalProfile" element={<HospitalProfile></HospitalProfile>} />
+              </Routes>
+            </div>
+            <Footer />
+            <ActionButtons />
           </div>
-          <Footer />
-          <ActionButtons />
-        </div>
-      </Router>
+        </Router>
+      </HospitalAuthProvider>
     </AuthProvider>
   );
 }

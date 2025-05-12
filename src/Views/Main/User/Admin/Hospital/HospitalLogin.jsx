@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../../../Context/authContext";
+import { HospitalAuthContext } from "../../../../../Context/hospitalContext";
 
 export default function HospitalLogin() {
-  const { setHospital } = useContext(AuthContext);
+  const { setHospital } = useContext(HospitalAuthContext);  
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -25,13 +25,26 @@ export default function HospitalLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://healthpoint-backend-production.up.railway.app/hospital/login", formData);
+      const payload = {
+        hospital_id: Number(formData.hospital_id),
+        hospital_password: formData.hospital_password
+      };
+
+      const response = await axios.post(
+        "https://healthpoint-backend-production.up.railway.app/hospital/login",
+        payload
+      );
+
       const { hospital_id, token } = response.data;
 
+      // Armazena o hospital e o token no contexto
       setHospital({ hospital_id, token });
+
+      // Armazena o token no localStorage
       localStorage.setItem("hospitalToken", token);
 
-      navigate("/Home");
+      // Redireciona para a página de perfil do hospital
+      navigate("/HospitalProfile");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || "Erro no login");
@@ -47,7 +60,7 @@ export default function HospitalLogin() {
             <div className="mb-3">
               <label htmlFor="hospital_id" className="form-label">ID do Hospital</label>
               <input
-                type="id"
+                type="number"
                 className="form-control"
                 id="hospital_id"
                 name="hospital_id"
