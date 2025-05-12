@@ -5,29 +5,41 @@ export const HospitalAuthContext = createContext();
 
 export function HospitalAuthProvider({ children }) {
   const [hospital, setHospital] = useState(null);
-  const token = localStorage.getItem("hospitalToken");
+
+  const fetchHospitalProfile = async (token) => {
+    try {
+      const { data } = await axios.get("https://healthpoint-backend-production.up.railway.app/hospital/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (data?.hospital_id) {
+        setHospital(data);
+      } else {
+        setHospital(null);
+        localStorage.removeItem("hospitalToken");
+      }
+    } catch {
+      setHospital(null);
+      localStorage.removeItem("hospitalToken");
+    }
+  };
 
   useEffect(() => {
-    if (token) {
-      axios
-        .get("https://healthpoint-backend-production.up.railway.app/hospital/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => setHospital(res.data))
-        .catch((err) => {
-          console.error("Erro no backend:", err); // Exibe mais detalhes do erro
-          setHospital(null);
-          localStorage.removeItem("hospitalToken"); // Limpa o token caso a autenticação falhe
-        });
-    } else {
-      setHospital(null); // Limpa o hospital caso não haja token
-    }
-  }, [token]);
+    const token = localStorage.getItem("hospitalToken");
+    if (token) fetchHospitalProfile(token);
+  }, []);
+
+  const loginHospital = ({ hospital_id, token }) => {
+    localStorage.setItem("hospitalToken", token);
+    fetchHospitalProfile(token);
+  };
+
+  const logoutHospital = () => {
+    localStorage.removeItem("hospitalToken");
+    setHospital(null);
+  };
 
   return (
-    <HospitalAuthContext.Provider value={{ hospital, setHospital }}>
+    <HospitalAuthContext.Provider value={{ hospital, loginHospital, logoutHospital }}>
       {children}
     </HospitalAuthContext.Provider>
   );

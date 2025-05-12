@@ -26,6 +26,7 @@ import Requests from "./Views/Main/User/Admin/Requests";
 import HospitalLogin from "./Views/Main/User/Admin/Hospital/HospitalLogin";
 import { HospitalAuthProvider } from "./Context/hospitalContext";
 import HospitalProfile from "./Views/Main/User/Admin/Hospital/HospitalProfile";
+
 export default function App() {
   return (
     <AuthProvider>
@@ -52,7 +53,7 @@ export default function App() {
                 <Route path="/Hospital" element={<Hospital />} />
                 <Route path="/Leaderboard" element={<Leaderboard />} />
                 <Route path="/Requests" element={<Requests />} />
-                <Route path="/HospitalProfile" element={<HospitalProfile></HospitalProfile>} />
+                <Route path="/HospitalProfile" element={<HospitalProfile />} /> {/* Ajustei a rota aqui */}
               </Routes>
             </div>
             <Footer />
