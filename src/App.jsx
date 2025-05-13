@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -31,7 +31,7 @@ export default function App() {
   return (
     <AuthProvider>
       <HospitalAuthProvider>
-        <Router>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <div className="main bg-light">
             <Nav />
             <div className="rgb-tape"></div>
@@ -53,13 +53,13 @@ export default function App() {
                 <Route path="/Hospital" element={<Hospital />} />
                 <Route path="/Leaderboard" element={<Leaderboard />} />
                 <Route path="/Requests" element={<Requests />} />
-                <Route path="/HospitalProfile" element={<HospitalProfile />} /> {/* Ajustei a rota aqui */}
+                <Route path="/HospitalProfile" element={<HospitalProfile />} />
               </Routes>
             </div>
             <Footer />
             <ActionButtons />
           </div>
-        </Router>
+        </BrowserRouter>
       </HospitalAuthProvider>
     </AuthProvider>
   );

@@ -1,16 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const ActionButtons = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
-    script.async = true;
-    script.onload = () => {
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
-    };
-    document.body.appendChild(script);
-  }, []);
-
   return (
     <>
       <button
@@ -18,7 +8,7 @@ const ActionButtons = () => {
         style={{
           width: '60px',
           height: '60px',
-          backgroundColor: '#0d6efd', 
+          backgroundColor: '#0d6efd',
           color: 'white',
           border: 'none',
         }}
