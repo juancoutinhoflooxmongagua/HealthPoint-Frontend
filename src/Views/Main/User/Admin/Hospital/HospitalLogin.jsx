@@ -20,7 +20,7 @@ export default function HospitalLogin() {
       const payload = { hospital_id: Number(formData.hospital_id), hospital_password: formData.hospital_password };
       const { data } = await axios.post("https://healthpoint-backend-production.up.railway.app/hospital/login", payload);
       loginHospital({ hospital_id: data.hospital_id, token: data.token });
-      navigate("/HospitalProfile");
+      navigate("/HospitalHome");
     } catch (err) {
       setError(err.response?.data?.error || "Erro no login");
     }

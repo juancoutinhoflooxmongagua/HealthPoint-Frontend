@@ -1,74 +1,55 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/authContext";
+import { HospitalAuthContext } from "../../Context/hospitalContext";
 
 export default function Nav() {
-  const { user, setUser } = useContext(AuthContext); 
+  const { user, logout: logoutUser } = useContext(AuthContext);
+  const { hospital, logoutHospital } = useContext(HospitalAuthContext);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUser(null); 
+    if (user) logoutUser();
+    if (hospital) logoutHospital();
   };
 
+  const loggedAs = hospital ? 'hospital' : user ? 'user' : null;
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-primary fixed-top py-2 shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <Link className="navbar-brand text-white d-flex align-items-center" to="/">
-          <i className="bi bi-hospital me-2" style={{ fontSize: "1.3rem" }}></i>HealthPoint
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <Link className="navbar-brand" to="/">HealthPoint</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
         </button>
-
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/">
-                Home
-              </Link>
-            </li>
-
-            {!user && (
+            {loggedAs === 'hospital' && (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link text-white" to="/register">
-                    Register
-                  </Link>
+                  <Link className="nav-link" to="/HospitalProfile">Perfil Hospital</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-white" to="/login">
-                    Login
-                  </Link>
+                  <button className="btn btn-link nav-link" onClick={handleLogout}>Sair</button>
                 </li>
               </>
             )}
-
-            {user && (
+            {loggedAs === 'user' && (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link text-white" to="/UserProfile">
-                    Meu Perfil
-                  </Link>
+                  <Link className="nav-link" to="/UserProfile">Perfil</Link>
                 </li>
-
-                <li>
-                  <Link className="nav-link text-white" to="/SearchUsers">
-                  Pesquisar usuários
-                  </Link>
-                </li>
-
                 <li className="nav-item">
-                  <button className="btn btn-outline-light" onClick={handleLogout}>
-                    Logout
-                  </button>
+                  <button className="btn btn-link nav-link" onClick={handleLogout}>Sair</button>
+                </li>
+              </>
+            )}
+            {!loggedAs && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Login Usuário</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/HospitalLogin">Login Hospital</Link>
                 </li>
               </>
             )}
