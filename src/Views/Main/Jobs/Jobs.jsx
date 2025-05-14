@@ -34,6 +34,30 @@ export default function Jobs() {
     fetchJobs();
   }, []);
 
+  const handleApply = async (job_id, job_title) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      await axios.post(
+        `https://healthpoint-backend-production.up.railway.app/apply/${job_id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert(`✅ Você se candidatou para a vaga de ${job_title}`);
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        alert(`❌ ${error.response.data.message}`);
+      } else {
+        alert("❌ Erro ao aplicar para a vaga.");
+      }
+    }
+  };
+
   if (loading) {
     return <div className="text-center text-primary">Carregando...</div>;
   }
@@ -65,10 +89,7 @@ export default function Jobs() {
                   <div className="mt-auto">
                     <button
                       className="btn btn-primary w-100 p-2"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        alert(`Você se candidatou para a vaga de ${job.job_title}`);
-                      }}
+                      onClick={() => handleApply(job.job_id, job.job_title)}
                     >
                       <i className="fas fa-paper-plane me-2"></i> Aplicar
                     </button>
