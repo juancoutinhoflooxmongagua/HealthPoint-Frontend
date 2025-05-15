@@ -28,6 +28,7 @@ import { HospitalAuthProvider } from "./Context/hospitalContext";
 import HospitalProfile from "./Views/Main/User/Admin/Hospital/HospitalProfile";
 import HospitalHome from "./Views/Main/User/Admin/Hospital/HospitalHome";
 import SidebarLayout from "./Views/Components/SidebarLayout";
+import Patients from "./Views/Main/User/Admin/Hospital/Patients";
 
 export default function App() {
   return (
@@ -61,6 +62,7 @@ export default function App() {
                   <Route path="/HospitalProfile" element={<HospitalProfile />} />
                   <Route path="/NewJob" element={<NewJob />} />
                   <Route path="/Hospital" element={<Hospital />} />
+                  <Route path="/Patients" element={<Patients />} />
                 </Route>
               </Routes>
             </div>

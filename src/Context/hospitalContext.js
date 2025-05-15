@@ -5,48 +5,52 @@ export const HospitalAuthContext = createContext();
 
 export function HospitalAuthProvider({ children }) {
   const [hospital, setHospital] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("hospitalToken") || null);
 
-  const fetchHospitalProfile = async (token) => {
+  const fetchHospitalProfile = async (tokenToUse) => {
     try {
-      const { data } = await axios.get("https://healthpoint-backend-production.up.railway.app/hospital/profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      
+      const { data } = await axios.get(
+        "https://healthpoint-backend-production.up.railway.app/hospital/profile",
+        { headers: { Authorization: `Bearer ${tokenToUse}` } }
+      );
+
       if (data?.hospital_id) {
-        // Se os dados do hospital forem válidos, armazenamos no estado
         setHospital(data);
+        setToken(tokenToUse);
       } else {
-        // Caso os dados não sejam válidos, limpamos o estado
         setHospital(null);
+        setToken(null);
         localStorage.removeItem("hospitalToken");
       }
     } catch (error) {
       console.error("Erro ao buscar perfil do hospital:", error);
       setHospital(null);
+      setToken(null);
       localStorage.removeItem("hospitalToken");
     }
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("hospitalToken");
     if (token) {
       fetchHospitalProfile(token);
     }
-  }, []);
+  }, [token]);
 
-  const loginHospital = ({ hospital_id, token }) => {
-    localStorage.setItem("hospitalToken", token);
-    setHospital({ hospital_id, token });  // Atualiza o estado com os dados do hospital
-    fetchHospitalProfile(token);  // Carrega o perfil do hospital após o login
+  const loginHospital = ({ hospital_id, token: newToken }) => {
+    localStorage.setItem("hospitalToken", newToken);
+    setToken(newToken);
+    setHospital({ hospital_id }); // vai atualizar com fetch do perfil
+    fetchHospitalProfile(newToken);
   };
 
   const logoutHospital = () => {
     localStorage.removeItem("hospitalToken");
     setHospital(null);
+    setToken(null);
   };
 
   return (
-    <HospitalAuthContext.Provider value={{ hospital, loginHospital, logoutHospital }}>
+    <HospitalAuthContext.Provider value={{ hospital, token, loginHospital, logoutHospital }}>
       {children}
     </HospitalAuthContext.Provider>
   );
