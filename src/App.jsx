@@ -27,6 +27,7 @@ import HospitalLogin from "./Views/Main/User/Admin/Hospital/HospitalLogin";
 import { HospitalAuthProvider } from "./Context/hospitalContext";
 import HospitalProfile from "./Views/Main/User/Admin/Hospital/HospitalProfile";
 import HospitalHome from "./Views/Main/User/Admin/Hospital/HospitalHome";
+import SidebarLayout from "./Views/Components/SidebarLayout";
 
 export default function App() {
   return (
@@ -42,23 +43,25 @@ export default function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/HospitalLogin" element={<HospitalLogin />} />
-                
+
                 <Route path="/UserProfile" element={<UserProfile />} />
                 <Route path="/Jobs" element={<Jobs />} />
                 <Route path="/Jobs/:id" element={<Jobs />} />
-                
-                <Route path="/HospitalHome" element={<HospitalHome></HospitalHome>} />
 
                 <Route path="/SearchUsers" element={<SearchUsers />} />
-                <Route path="/NewJob" element={<NewJob />} />
                 <Route path="/Application" element={<Application />} />
                 <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
                 <Route path="/Statistics" element={<Statistics />} />
                 <Route path="/NewHospital" element={<NewHospital />} />
-                <Route path="/Hospital" element={<Hospital />} />
                 <Route path="/Leaderboard" element={<Leaderboard />} />
                 <Route path="/Requests" element={<Requests />} />
-                <Route path="/HospitalProfile" element={<HospitalProfile />} />
+               
+                <Route element={<SidebarLayout />}>
+                  <Route path="/HospitalHome" element={<HospitalHome />} />
+                  <Route path="/HospitalProfile" element={<HospitalProfile />} />
+                  <Route path="/NewJob" element={<NewJob />} />
+                  <Route path="/Hospital" element={<Hospital />} />
+                </Route>
               </Routes>
             </div>
             <Footer />
