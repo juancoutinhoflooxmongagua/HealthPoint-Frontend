@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardAdmin from "../Admin/DashboardAdmin"
+import DashboardAdmin from "./DashboardAdmin"
 export default function AdminDashboard({ user }) {
   return (
     <>

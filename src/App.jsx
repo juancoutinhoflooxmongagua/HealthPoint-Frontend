@@ -5,30 +5,31 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../src/Assets/Css/index.css';
 
-import Nav from "./Views/Components/Nav";
-import Register from "./Views/Main/Register";
+import Nav from "./Views/App/Components/Nav";
+import Register from "./Views/App/Home/Register";
 import Login from "./Views/Main/Login";
 import Home from "./Views/Main/Home";
-import Jobs from "./Views/Main/Jobs/Jobs";
+import Jobs from "./Views/App/Jobs/Jobs";
 import UserProfile from "./Views/Main/User/UserProfile";
-import Footer from "./Views/Components/Footer";
+import Footer from "./Views/App/Components/Footer";
 import SearchUsers from "../src/Views/Main/User/Admin/SearchUsers";
-import Application from "./Views/application";
-import { AuthProvider } from "./Context/authContext";   
-import DashboardAdmin from "./Views/Main/User/Admin/DashboardAdmin";
-import NewJob from "./Views/Main/Jobs/NewJob";
-import ActionButtons from "./Views/Components/ActionButtons";
-import Statistics from "./Views/Main/User/Admin/Statistics";
-import NewHospital from "./Views/Main/User/Admin/Hospital/NewHospital";
-import Hospital from "./Views/Main/User/Admin/Hospital/Hospital";
-import Leaderboard from "./Views/Main/Jobs/Leaderboard";
-import Requests from "./Views/Main/User/Admin/Requests";
+import Application from "./Views/App/Admin/application";
+import { AuthProvider } from "./Services/Context/authContext";   
+import DashboardAdmin from "./Views/App/Admin/DashboardAdmin";
+import NewJob from "./Views/App/Jobs/NewJob";
+import ActionButtons from "./Views/App/Components/ActionButtons";
+import Statistics from "./Views/App/Admin/Statistics";
+import NewHospital from "./Views/App/Hospital/NewHospital";
+import Hospital from "./Views/App/Hospital/Hospital";
+import Leaderboard from "./Views/App/Jobs/Leaderboard";
+import Requests from "./Views/App/Admin/Requests";
 import HospitalLogin from "./Views/Main/User/Admin/Hospital/HospitalLogin";
-import { HospitalAuthProvider } from "./Context/hospitalContext";
+import { HospitalAuthProvider } from "./Services/Context/hospitalContext";
 import HospitalProfile from "./Views/Main/User/Admin/Hospital/HospitalProfile";
-import HospitalHome from "./Views/Main/User/Admin/Hospital/HospitalHome";
-import SidebarLayout from "./Views/Components/SidebarLayout";
+import HospitalHome from "./Views/App/Hospital/HospitalHome";
+import SidebarLayout from "./Views/App/Components/SidebarLayout";
 import Patients from "./Views/Main/User/Admin/Hospital/Patients";
+import NewPatient from "./Views/App/Hospital/newPatient";
 
 export default function App() {
   return (
@@ -63,6 +64,7 @@ export default function App() {
                   <Route path="/NewJob" element={<NewJob />} />
                   <Route path="/Hospital" element={<Hospital />} />
                   <Route path="/Patients" element={<Patients />} />
+                  <Route path="/NewPatients" element={<NewPatient />} />
                 </Route>
               </Routes>
             </div>
