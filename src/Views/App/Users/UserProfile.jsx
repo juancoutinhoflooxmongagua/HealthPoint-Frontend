@@ -6,67 +6,90 @@ export default function UserProfile() {
   const { user } = useContext(AuthContext);
 
   return (
-    <main className="container mt-5">
-      <h1 className="text-center text-primary mb-4" style={{ fontWeight: '600' }}>Perfil de Usuário</h1>
+    <main
+      style={{
+        maxWidth: 700,
+        margin: "2rem auto",
+        padding: "1rem",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <h1
+        style={{
+          textAlign: "center",
+          color: "#0d6efd",
+          fontWeight: 600,
+          marginBottom: "2rem",
+        }}
+      >
+        Perfil de Usuário
+      </h1>
 
-      <div className="card shadow-sm rounded-3 border-0">
-        <div className="card-body">
-          <div className="row mb-4">
-            <div className="col-sm-4">
-              <p className="mb-0"><strong>Nome:</strong></p>
-            </div>
-            <div className="col-sm-8">
-              <p className="text-muted mb-0">{user.user_name}</p>
-            </div>
-          </div>
-          <hr />
-
-          <div className="row mb-4">
-            <div className="col-sm-4">
-              <p className="mb-0"><strong>Email:</strong></p>
-            </div>
-            <div className="col-sm-8">
-              <p className="text-muted mb-0">{user.user_email}</p>
-            </div>
-          </div>
-          <hr />
-
-          <div className="row mb-4">
-            <div className="col-sm-4">
-              <p className="mb-0"><strong>Telefone:</strong></p>
-            </div>
-            <div className="col-sm-8">
-              <p className="text-muted mb-0">{user.user_phone}</p>
-            </div>
-          </div>
-          <hr />
-
-          <div className="row mb-4">
-            <div className="col-sm-4">
-              <p className="mb-0"><strong>Nível de Usuário:</strong></p>
-            </div>
-            <div className="col-sm-8">
-              <p className="text-muted mb-0">
-                <UsersTradutor user={user.user_role} />
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-5">
-            <button
-              className="btn btn-primary btn-lg"
+      <div
+        style={{
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          borderRadius: 12,
+          padding: "2rem",
+          backgroundColor: "#fff",
+        }}
+      >
+        {[
+          { label: "Nome:", value: user.user_name },
+          { label: "Email:", value: user.user_email },
+          { label: "Telefone:", value: user.user_phone },
+          { label: "Nível de Usuário:", value: <UsersTradutor user={user.user_role} /> },
+        ].map(({ label, value }, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              marginBottom: "1.5rem",
+              borderBottom: i < 3 ? "1px solid #e0e0e0" : "none",
+              paddingBottom: i < 3 ? "1rem" : 0,
+            }}
+          >
+            <div
               style={{
-                borderRadius: '25px',
-                padding: '12px 30px',
-                fontSize: '1rem',
-                transition: 'all 0.3s ease',
+                flex: "0 0 35%",
+                fontWeight: "700",
+                color: "#333",
+                minWidth: 110,
               }}
-              onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-              onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
             >
-              Editar Perfil
-            </button>
+              {label}
+            </div>
+            <div
+              style={{
+                flex: "1",
+                color: "#6c757d",
+                wordBreak: "break-word",
+              }}
+            >
+              {value}
+            </div>
           </div>
+        ))}
+
+        <div style={{ textAlign: "center", marginTop: "3rem" }}>
+          <button
+            style={{
+              backgroundColor: "#0d6efd",
+              color: "white",
+              border: "none",
+              borderRadius: 25,
+              padding: "12px 30px",
+              fontSize: "1rem",
+              fontWeight: "600",
+              cursor: "pointer",
+              transition: "transform 0.3s ease",
+              userSelect: "none",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            Editar Perfil
+          </button>
         </div>
       </div>
     </main>

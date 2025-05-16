@@ -22,9 +22,9 @@ export default function Login() {
     axios
       .post("https://healthpoint-backend-production.up.railway.app/auth/login", form)
       .then((res) => {
-        localStorage.setItem("token", res.data.token); 
-        setUser(res.data.user); 
-        navigate("/"); 
+        localStorage.setItem("token", res.data.token);
+        setUser(res.data.user);
+        navigate("/");
       })
       .catch((err) => {
         console.error("Erro ao fazer login:", err);
@@ -33,44 +33,38 @@ export default function Login() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
-      <div className="card shadow-lg border-0" style={{ maxWidth: "420px", width: "100%" }}>
-        <div className="card-body p-4">
-          <h2 className="text-center text-primary mb-4 fw-bold">Entrar</h2>
+    <div>
+      <h2>Entrar</h2>
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-floating mb-3">
-              <input
-                type="email"
-                className="form-control"
-                name="user_email"
-                value={form.user_email}
-                onChange={handleChange}
-                id="email"
-                placeholder="Email"
-              />
-              <label htmlFor="email" className="text-muted">Email</label>
-            </div>
-
-            <div className="form-floating mb-4">
-              <input
-                type="password"
-                className="form-control"
-                name="user_password"
-                value={form.user_password}
-                onChange={handleChange}
-                id="password"
-                placeholder="Senha"
-              />
-              <label htmlFor="password" className="text-muted">Senha</label>
-            </div>
-
-            <button type="submit" className="btn btn-primary w-100 py-2 fw-semibold">
-              Login
-            </button>
-          </form>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            name="user_email"
+            value={form.user_email}
+            onChange={handleChange}
+            id="email"
+            placeholder="Digite seu email"
+            required
+          />
         </div>
-      </div>
+
+        <div>
+          <label htmlFor="password">Senha:</label>
+          <input
+            type="password"
+            name="user_password"
+            value={form.user_password}
+            onChange={handleChange}
+            id="password"
+            placeholder="Digite sua senha"
+            required
+          />
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }
