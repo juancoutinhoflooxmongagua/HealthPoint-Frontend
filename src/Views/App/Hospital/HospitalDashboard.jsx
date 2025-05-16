@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { HospitalAuthContext } from "../../../../../Context/hospitalContext";
+import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 
 export default function HospitalDashboard() {
   const { hospital } = useContext(HospitalAuthContext);

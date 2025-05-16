@@ -1,6 +1,6 @@
-import React from "react";
-import HospitalDashboard from "./HospitalDashboard";
-import Patients from "../../Main/User/Admin/Hospital/Patients";
+import HospitalDashboard from "./HospitalDashboard"
+import Patients from "./Patients"
+
 export default function HospitalHome(){
     return (
         <main>

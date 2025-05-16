@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { HospitalAuthContext } from "../../../../../Context/hospitalContext";
+import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 
 export default function HospitalLogin() {
   const { loginHospital } = useContext(HospitalAuthContext);

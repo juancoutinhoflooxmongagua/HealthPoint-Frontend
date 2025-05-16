@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../Context/authContext";
-import { HospitalAuthContext } from "../../Context/hospitalContext";
+import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
+import { AuthContext } from "../../../Services/Context/authContext";
 
-import UserDashboard from "./User/UserDashboard";
-import HospitalDashboard from "./User/Admin/Hospital/HospitalDashboard";
-import AdminDashboard from "../Main/User/Admin/AdminDashboard";
+import UserDashboard from "../Users/UserDashboard";
+import HospitalDashboard from "../hospital/HospitalDashboard";
+
+import AdminDashboard from "../Admin/AdminDashboard";
 
 import hospitalImage from "../../Assets/Images/Hospital room-bro.png";
 import VolunteerImage from "../../Assets/Images/Volunteering-bro.png";

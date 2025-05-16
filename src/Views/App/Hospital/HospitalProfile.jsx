@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { HospitalAuthContext } from "../../../../../Context/hospitalContext";
+import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 
 export default function HospitalProfile() {
   const { hospital } = useContext(HospitalAuthContext);

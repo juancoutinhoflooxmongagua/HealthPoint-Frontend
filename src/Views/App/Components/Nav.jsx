@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../Services/Context/authContext";
 import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
-
+import { AuthContext } from "../../../Services/Context/authContext";
 export default function Nav() {
   const { user, logout: logoutUser } = useContext(AuthContext);
   const { hospital, logoutHospital } = useContext(HospitalAuthContext);

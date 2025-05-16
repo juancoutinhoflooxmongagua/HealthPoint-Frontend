@@ -1,35 +1,44 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import '../src/Assets/Css/index.css';
+import './Views/Assets/Css/index.css';
 
-import Nav from "./Views/App/Components/Nav";
-import Register from "./Views/App/Home/Register";
-import Login from "./Views/Main/Login";
-import Home from "./Views/Main/Home";
-import Jobs from "./Views/App/Jobs/Jobs";
-import UserProfile from "./Views/Main/User/UserProfile";
-import Footer from "./Views/App/Components/Footer";
-import SearchUsers from "../src/Views/Main/User/Admin/SearchUsers";
-import Application from "./Views/App/Admin/application";
-import { AuthProvider } from "./Services/Context/authContext";   
-import DashboardAdmin from "./Views/App/Admin/DashboardAdmin";
-import NewJob from "./Views/App/Jobs/NewJob";
-import ActionButtons from "./Views/App/Components/ActionButtons";
-import Statistics from "./Views/App/Admin/Statistics";
-import NewHospital from "./Views/App/Hospital/NewHospital";
-import Hospital from "./Views/App/Hospital/Hospital";
-import Leaderboard from "./Views/App/Jobs/Leaderboard";
-import Requests from "./Views/App/Admin/Requests";
-import HospitalLogin from "./Views/Main/User/Admin/Hospital/HospitalLogin";
+// Contexts
+import { AuthProvider } from "./Services/Context/authContext";
 import { HospitalAuthProvider } from "./Services/Context/hospitalContext";
-import HospitalProfile from "./Views/Main/User/Admin/Hospital/HospitalProfile";
-import HospitalHome from "./Views/App/Hospital/HospitalHome";
+
+// Components
+import Nav from "./Views/App/Components/Nav";
+import Footer from "./Views/App/Components/Footer";
+import ActionButtons from "./Views/App/Components/ActionButtons";
 import SidebarLayout from "./Views/App/Components/SidebarLayout";
-import Patients from "./Views/Main/User/Admin/Hospital/Patients";
-import NewPatient from "./Views/App/Hospital/newPatient";
+
+// Basics
+import Register from "./Views/App/Home/Register";
+import Login from "./Views/App/Home/Login";
+import Home from "./Views/App/Home/Home";
+import Jobs from "./Views/App/Jobs/Jobs";
+
+// Users
+import UserProfile from "./Views/App/Users/UserProfile";
+import Leaderboard from "./Views/App/Jobs/Leaderboard";
+
+// Admin
+import SearchUsers from "./Views/App/Admin/SearchUsers";
+import Hospital from "./Views/App/hospital/Hospital";
+import NewHospital from "./Views/App/hospital/NewHospital";
+import DashboardAdmin from "./Views/App/Admin/DashboardAdmin";
+import Statistics from "./Views/App/Admin/Statistics";
+import Requests from "./Views/App/Admin/Requests";
+import Application from "./Views/App/Admin/application";
+
+// Hospital
+import HospitalLogin from "./Views/App/hospital/HospitalLogin";
+import NewJob from "./Views/App/Jobs/NewJob";
+import HospitalProfile from "./Views/App/hospital/HospitalProfile";
+import HospitalHome from "./Views/App/hospital/HospitalHome";
+import Patients from "./Views/App/hospital/Patients";
+import NewPatient from "./Views/App/hospital/newPatient";
 
 export default function App() {
   return (
@@ -57,7 +66,7 @@ export default function App() {
                 <Route path="/NewHospital" element={<NewHospital />} />
                 <Route path="/Leaderboard" element={<Leaderboard />} />
                 <Route path="/Requests" element={<Requests />} />
-               
+
                 <Route element={<SidebarLayout />}>
                   <Route path="/HospitalHome" element={<HospitalHome />} />
                   <Route path="/HospitalProfile" element={<HospitalProfile />} />

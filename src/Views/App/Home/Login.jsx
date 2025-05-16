@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/authContext";
-
+import { AuthContext } from "../../../Services/Context/authContext";
 export default function Login() {
   const { setUser } = useContext(AuthContext);
   const [form, setForm] = useState({

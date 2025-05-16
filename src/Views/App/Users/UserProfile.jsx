@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../Services/Context/authContext.js";
-import UsersTradutor from "../../App/Components/i18n/usersTradutor.js";
+import UsersTradutor from '../../App/Components/i18n/usersTradutor.jsx';
 
 export default function UserProfile() {
   const { user } = useContext(AuthContext);
