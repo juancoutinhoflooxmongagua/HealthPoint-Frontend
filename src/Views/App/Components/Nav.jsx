@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 import { AuthContext } from "../../../Services/Context/authContext";
+
 export default function Nav() {
   const { user, logout: logoutUser } = useContext(AuthContext);
   const { hospital, logoutHospital } = useContext(HospitalAuthContext);
@@ -37,6 +38,9 @@ export default function Nav() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/UserProfile">Perfil</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/Notifications">Notificações</Link>
+                </li> {/* <-- esta tag <li> estava faltando o fechamento */}
                 <li className="nav-item">
                   <button className="btn btn-link nav-link" onClick={handleLogout}>Sair</button>
                 </li>

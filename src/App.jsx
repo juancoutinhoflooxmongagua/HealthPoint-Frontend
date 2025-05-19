@@ -12,6 +12,7 @@ import Nav from "./Views/App/Components/Nav";
 import Footer from "./Views/App/Components/Footer";
 import ActionButtons from "./Views/App/Components/ActionButtons";
 import SidebarLayout from "./Views/App/Components/SidebarLayout";
+import NotificationsPage from "./Views/App/Components/Notifications";
 
 // Basics
 import Register from "./Views/App/Home/Register";
@@ -54,7 +55,7 @@ export default function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/HospitalLogin" element={<HospitalLogin />} />
-
+                <Route path="/Notifications" element={<NotificationsPage />} />
                 <Route path="/UserProfile" element={<UserProfile />} />
                 <Route path="/Jobs" element={<Jobs />} />
                 <Route path="/Jobs/:id" element={<Jobs />} />
