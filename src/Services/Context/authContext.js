@@ -17,14 +17,19 @@ export function AuthProvider({ children }) {
         })
         .then((res) => setUser(res.data))
         .catch(() => {
-          setUser(null); 
-          localStorage.removeItem("token"); 
+          setUser(null);
+          localStorage.removeItem("token");
         });
     }
   }, [token]);
 
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

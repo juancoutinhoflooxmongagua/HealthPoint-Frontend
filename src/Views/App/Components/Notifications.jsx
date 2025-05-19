@@ -8,49 +8,49 @@ export default function NotificationsPage() {
 
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const isHospital = !!hospital;
-  const id = isHospital ? hospital.hospital_id : user?.user_id;
+  const id = isHospital ? hospital?.hospital_id : user?.user_id;
 
   useEffect(() => {
     const fetchNotifications = async () => {
+      if (!id) return;
+
+      setLoading(true);
+      setError(null);
+
       try {
         const endpoint = isHospital
-          ? `/api/notifications/hospitals/${id}`
-          : `/api/notifications/users/${id}`;
+          ? `https://healthpoint-backend-production.up.railway.app/notifications/hospitals/${id}`
+          : `https://healthpoint-backend-production.up.railway.app/notifications/users/${id}`;
 
-        const response = await fetch(endpoint);
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(endpoint, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro HTTP ${response.status}: ${response.statusText}`);
+        }
+
         const data = await response.json();
         setNotifications(data);
-      } catch (error) {
-        console.error("Erro ao buscar notificações:", error);
+      } catch (err) {
+        setError("Não foi possível carregar as notificações.");
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) fetchNotifications();
+    fetchNotifications();
   }, [id, isHospital]);
 
-  const markAsRead = async (notificationId) => {
-    try {
-      const endpoint = isHospital
-        ? `/api/notifications/hospitals/${notificationId}/read`
-        : `/api/notifications/users/${notificationId}/read`;
-
-      await fetch(endpoint, { method: "PATCH" });
-
-      setNotifications((prev) =>
-        prev.map((n) =>
-          n.notification_id === notificationId ? { ...n, is_read: 1 } : n
-        )
-      );
-    } catch (error) {
-      console.error("Erro ao marcar como lida:", error);
-    }
-  };
-
   if (loading) return <p>Carregando notificações...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
@@ -58,22 +58,17 @@ export default function NotificationsPage() {
       {notifications.length === 0 ? (
         <p>Sem notificações por enquanto.</p>
       ) : (
-        <ul>
+        <div>
           {notifications.map((notif) => (
-            <li key={notif.notification_id} style={{ marginBottom: "20px" }}>
-              <h4>{notif.title}</h4>
+            <div key={notif.notification_id}>
+              <strong>{notif.title}</strong>
               <p>{notif.message}</p>
               <small>{new Date(notif.created_at).toLocaleString()}</small>
-              <br />
-              {!notif.is_read && (
-                <button onClick={() => markAsRead(notif.notification_id)}>
-                  Marcar como lida
-                </button>
-              )}
-              {notif.is_read && <span style={{ color: "green" }}>✔ Lida</span>}
-            </li>
+              <div>{notif.is_read ? "✔ Lida" : "📩 Nova"}</div>
+              <hr />
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
