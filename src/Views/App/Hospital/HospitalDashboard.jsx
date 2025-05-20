@@ -73,82 +73,92 @@ export default function HospitalDashboard() {
   const statusBadge = (status) => {
     switch (status) {
       case "pending":
-        return <span>[Pendente]</span>;
+        return <span className="badge bg-warning text-dark">Pendente</span>;
       case "approved":
-        return <span>[Aprovada]</span>;
+        return <span className="badge bg-success">Aprovada</span>;
       case "rejected":
-        return <span>[Rejeitada]</span>;
+        return <span className="badge bg-danger">Rejeitada</span>;
       default:
-        return <span>[{status}]</span>;
+        return <span className="badge bg-secondary">{status}</span>;
     }
   };
 
   if (!hospital) {
     return (
-      <p>Você precisa estar logado para visualizar as vagas.</p>
+      <p className="text-center mt-5">Você precisa estar logado para visualizar as vagas.</p>
     );
   }
 
   return (
-    <div>
-      <strong>Olá, {hospital?.hospital_name ?? "Hospital"}! Gerencie suas vagas e receba voluntários.</strong>
+    <div className="container my-5">
+      <h1 className="mb-4 text-center">Olá, {hospital?.hospital_name ?? "Hospital"}!</h1>
+      <p className="text-center mb-5">Gerencie suas vagas e receba voluntários.</p>
 
       {loading && (
-        <div>
-          <p>Carregando vagas...</p>
+        <div className="text-center">
+          <div className="spinner-border" role="status" aria-hidden="true"></div>
+          <span className="ms-2">Carregando vagas...</span>
         </div>
       )}
 
       {erro && (
-        <div>
-          <p>{erro}</p>
-        </div>
+        <div className="alert alert-danger text-center">{erro}</div>
       )}
 
       {!loading && !erro && jobs.length === 0 && (
-        <p>Nenhuma vaga encontrada.</p>
+        <p className="text-center">Nenhuma vaga encontrada.</p>
       )}
 
-      <div>
+      <div className="row">
         {jobs.map((job) => (
-          <div key={job.job_id}>
-            <h3>{job.job_title}</h3>
-            <p><strong>Tipo:</strong> {job.job_type}</p>
-            <p>{job.job_description}</p>
-            <p><strong>Pontos:</strong> {job.job_points}</p>
+          <div key={job.job_id} className="col-md-6 mb-4">
+            <div className="card shadow-sm h-100">
+              <div className="card-body d-flex flex-column">
+                <h4 className="card-title">{job.job_title}</h4>
+                <p className="card-subtitle mb-2 text-muted">{job.job_type}</p>
+                <p className="card-text flex-grow-1">{job.job_description}</p>
+                <p><strong>Pontos:</strong> {job.job_points}</p>
 
-            <h4>Candidatos:</h4>
-            {job.applications.length === 0 ? (
-              <p>Nenhum candidato ainda.</p>
-            ) : (
-              <ul>
-                {job.applications.map((app) => (
-                  <li key={app.application_id}>
-                    <div>
-                      <strong>{app.user_name}</strong> ({app.user_email}) {statusBadge(app.application_status)}
-                    </div>
-                    {app.application_status === "pending" && (
-                      <div>
-                        <button
-                          onClick={() => handleUpdateStatus(app.application_id, "aceita")}
-                          disabled={updatingId === app.application_id}
-                          title="Aceitar"
-                        >
-                          Aceitar
-                        </button>
-                        <button
-                          onClick={() => handleUpdateStatus(app.application_id, "rejeitada")}
-                          disabled={updatingId === app.application_id}
-                          title="Rejeitar"
-                        >
-                          Rejeitar
-                        </button>
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
+                <h5>Candidatos:</h5>
+                {job.applications.length === 0 ? (
+                  <p>Nenhum candidato ainda.</p>
+                ) : (
+                  <ul className="list-group list-group-flush">
+                    {job.applications.map((app) => (
+                      <li
+                        key={app.application_id}
+                        className="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                      >
+                        <div>
+                          <strong>{app.user_name}</strong> ({app.user_email}){" "}
+                          {statusBadge(app.application_status)}
+                        </div>
+                        {app.application_status === "pending" && (
+                          <div className="btn-group btn-group-sm" role="group" aria-label="Status actions">
+                            <button
+                              className="btn btn-success"
+                              onClick={() => handleUpdateStatus(app.application_id, "aceita")}
+                              disabled={updatingId === app.application_id}
+                              title="Aceitar"
+                            >
+                              Aceitar
+                            </button>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleUpdateStatus(app.application_id, "rejeitada")}
+                              disabled={updatingId === app.application_id}
+                              title="Rejeitar"
+                            >
+                              Rejeitar
+                            </button>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>

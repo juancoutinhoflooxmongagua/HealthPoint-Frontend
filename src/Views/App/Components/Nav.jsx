@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 import { AuthContext } from "../../../Services/Context/authContext";
 
@@ -12,52 +12,109 @@ export default function Nav() {
     if (hospital) logoutHospital();
   };
 
-  const loggedAs = hospital ? 'hospital' : user ? 'user' : null;
+  const loggedAs = hospital ? "hospital" : user ? "user" : null;
 
   return (
-    <nav>
-      <header>
-        <h1>
-          <Link to="/">HealthPoint</Link>
-        </h1>
-        <ul>
-          {loggedAs === 'hospital' && (
-            <>
-              <li>
-                <Link to="/HospitalProfile">Perfil Hospital</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout}>Sair</button>
-              </li>
-            </>
-          )}
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+      <div className="container">
+        <Link className="navbar-brand fw-bold" to="/">
+          HealthPoint
+        </Link>
 
-          {loggedAs === 'user' && (
-            <>
-              <li>
-                <Link to="/UserProfile">Perfil</Link>
-              </li>
-              <li>
-                <Link to="/Notifications">Notificações</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout}>Sair</button>
-              </li>
-            </>
-          )}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-          {!loggedAs && (
-            <>
-              <li>
-                <Link to="/login">Login Usuário</Link>
-              </li>
-              <li>
-                <Link to="/HospitalLogin">Login Hospital</Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </header>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            {loggedAs === "hospital" && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    activeclassname="active"
+                    to="/HospitalProfile"
+                  >
+                    Perfil Hospital
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-outline-danger ms-3"
+                    type="button"
+                  >
+                    Sair
+                  </button>
+                </li>
+              </>
+            )}
+
+            {loggedAs === "user" && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    activeclassname="active"
+                    to="/UserProfile"
+                  >
+                    Perfil
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    activeclassname="active"
+                    to="/Notifications"
+                  >
+                    Notificações
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-outline-danger ms-3"
+                    type="button"
+                  >
+                    Sair
+                  </button>
+                </li>
+              </>
+            )}
+
+            {!loggedAs && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    activeclassname="active"
+                    to="/login"
+                  >
+                    Login Usuário
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    activeclassname="active"
+                    to="/HospitalLogin"
+                  >
+                    Login Hospital
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 }

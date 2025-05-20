@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Services/Context/authContext";
+
 export default function Login() {
   const { setUser } = useContext(AuthContext);
   const [form, setForm] = useState({
@@ -32,38 +33,48 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Entrar</h2>
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "80vh", padding: "1rem" }}>
+      <main className="card p-4 shadow-sm" style={{ maxWidth: "400px", width: "100%" }}>
+        <h2 className="mb-4 text-center">Entrar</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            name="user_email"
-            value={form.user_email}
-            onChange={handleChange}
-            id="email"
-            placeholder="Digite seu email"
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              name="user_email"
+              value={form.user_email}
+              onChange={handleChange}
+              id="email"
+              placeholder="Digite seu email"
+              className="form-control"
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password">Senha:</label>
-          <input
-            type="password"
-            name="user_password"
-            value={form.user_password}
-            onChange={handleChange}
-            id="password"
-            placeholder="Digite sua senha"
-            required
-          />
-        </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="form-label">
+              Senha:
+            </label>
+            <input
+              type="password"
+              name="user_password"
+              value={form.user_password}
+              onChange={handleChange}
+              id="password"
+              placeholder="Digite sua senha"
+              className="form-control"
+              required
+            />
+          </div>
 
-        <button type="submit">Login</button>
-      </form>
+          <button type="submit" className="btn btn-primary w-100">
+            Login
+          </button>
+        </form>
+      </main>
     </div>
   );
 }

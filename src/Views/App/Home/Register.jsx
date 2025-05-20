@@ -34,12 +34,12 @@ export default function Register() {
   };
 
   return (
-    <div>
-      <h2>Criar Conta</h2>
+    <div className="container py-5" style={{ maxWidth: "480px" }}>
+      <h2 className="mb-4 text-center fw-bold">Criar Conta</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nome:</label>
+      <form onSubmit={handleSubmit} className="border p-4 rounded shadow-sm bg-white">
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label fw-semibold">Nome</label>
           <input
             type="text"
             name="user_name"
@@ -48,11 +48,12 @@ export default function Register() {
             id="name"
             placeholder="Digite seu nome"
             required
+            className="form-control"
           />
         </div>
 
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label fw-semibold">Email</label>
           <input
             type="email"
             name="user_email"
@@ -61,11 +62,12 @@ export default function Register() {
             id="email"
             placeholder="Digite seu email"
             required
+            className="form-control"
           />
         </div>
 
-        <div>
-          <label htmlFor="password">Senha:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label fw-semibold">Senha</label>
           <input
             type="password"
             name="user_password"
@@ -74,11 +76,12 @@ export default function Register() {
             id="password"
             placeholder="Digite sua senha"
             required
+            className="form-control"
           />
         </div>
 
-        <div>
-          <label htmlFor="phone">Telefone:</label>
+        <div className="mb-4">
+          <label htmlFor="phone" className="form-label fw-semibold">Telefone</label>
           <input
             type="text"
             name="user_phone"
@@ -87,10 +90,13 @@ export default function Register() {
             id="phone"
             placeholder="Digite seu telefone"
             required
+            className="form-control"
           />
         </div>
 
-        <button type="submit">Registrar</button>
+        <button type="submit" className="btn btn-primary w-100 fw-semibold py-2">
+          Registrar
+        </button>
       </form>
     </div>
   );

@@ -2,11 +2,16 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
+import { useTheme } from "../../../Services/Context/themeContext";
 
-export default function Patients() {
-  const { hospital, token } = useContext(HospitalAuthContext);
+export default function PatientsAccordion() {
+  const { token } = useContext(HospitalAuthContext);
+  const { theme } = useTheme();
+
   const [patients, setPatients] = useState([]);
   const [error, setError] = useState(null);
+  const [openId, setOpenId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -27,48 +32,80 @@ export default function Patients() {
       });
   }, [token]);
 
+  const toggleOpen = (id) => {
+    setOpenId(openId === id ? null : id);
+  };
+
+  // Filtra pacientes pelo nome (case insensitive)
+  const filteredPatients = patients.filter((patient) =>
+    patient.patient_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const isDark = theme === "dark";
+
   return (
-    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Lista de Pacientes</h1>
+    <main className={`container py-5 ${isDark ? "bg-dark text-light" : ""}`}>
+      <h1 className="mb-4">Lista de Pacientes</h1>
 
-      {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
-      {patients.length === 0 && !error && <p>Nenhum paciente encontrado.</p>}
+      {/* Input de busca */}
+      <div className="mb-4">
+        <input
+          type="text"
+          className={`form-control ${isDark ? "bg-secondary text-white border-0" : ""}`}
+          placeholder="Buscar paciente pelo nome..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-      <div style={{ display: "grid", gap: "1.5rem" }}>
-        {patients.map((patient) => (
-          <div
-            key={patient.patient_id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "10px",
-              padding: "1.5rem",
-              backgroundColor: "#f9f9f9",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h2 style={{ marginBottom: "1rem", color: "#333" }}>{patient.patient_name}</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
-              <div style={{ flex: "1" }}>
-                <h3>Dados do Paciente</h3>
-                <p><strong>ID:</strong> {patient.patient_id}</p>
-                <p><strong>CPF:</strong> {patient.cpf}</p>
-                <p><strong>Email:</strong> {patient.email}</p>
-                <p><strong>Data de Nascimento:</strong> {patient.birth_date}</p>
-                <p><strong>Gênero:</strong> {patient.gender}</p>
-                <p><strong>Telefone:</strong> {patient.phone}</p>
-                <p><strong>Endereço:</strong> {patient.address}</p>
-                <p><strong>Hospital ID:</strong> {patient.hospital_id}</p>
-                <p><strong>Registrado em:</strong> {new Date(patient.register).toLocaleString()}</p>
+      {!error && filteredPatients.length === 0 && (
+        <p>Nenhum paciente encontrado com esse nome.</p>
+      )}
+
+      <div className="accordion-simple">
+        {filteredPatients.map((patient) => (
+          <div key={patient.patient_id} className={`mb-3 border rounded ${isDark ? "border-secondary" : ""}`}>
+            <button
+              onClick={() => toggleOpen(patient.patient_id)}
+              className={`w-100 text-start p-3 btn ${isDark ? "btn-dark text-white" : "btn-light"}`}
+              style={{ cursor: "pointer" }}
+              aria-expanded={openId === patient.patient_id}
+            >
+              {patient.patient_name}
+              <span className="float-end">{openId === patient.patient_id ? "▲" : "▼"}</span>
+            </button>
+
+            {openId === patient.patient_id && (
+              <div className={`p-3 ${isDark ? "bg-secondary text-white" : "bg-light"}`}>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <h5>Dados do Paciente</h5>
+                    <ul className="list-unstyled">
+                      <li><strong>ID:</strong> {patient.patient_id}</li>
+                      <li><strong>CPF:</strong> {patient.cpf}</li>
+                      <li><strong>Email:</strong> {patient.email}</li>
+                      <li><strong>Data de Nascimento:</strong> {patient.birth_date}</li>
+                      <li><strong>Gênero:</strong> {patient.gender}</li>
+                      <li><strong>Telefone:</strong> {patient.phone}</li>
+                      <li><strong>Endereço:</strong> {patient.address}</li>
+                      <li><strong>Hospital ID:</strong> {patient.hospital_id}</li>
+                      <li><strong>Registrado em:</strong> {new Date(patient.register).toLocaleString()}</li>
+                    </ul>
+                  </div>
+
+                  <div className={`col-md-6 rounded p-3 ${isDark ? "bg-dark" : "bg-body-secondary"}`}>
+                    <h5>Contato Familiar</h5>
+                    <ul className="list-unstyled">
+                      <li><strong>Nome:</strong> {patient.family_contact_name}</li>
+                      <li><strong>Telefone:</strong> {patient.family_contact_phone}</li>
+                      <li><strong>Parentesco:</strong> {patient.family_contact_relationship}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-
-              <div style={{ flex: "1", backgroundColor: "#eef", padding: "1rem", borderRadius: "8px" }}>
-                <h3>Contato Familiar</h3>
-                <p><strong>Nome:</strong> {patient.family_contact_name}</p>
-                <p><strong>Telefone:</strong> {patient.family_contact_phone}</p>
-                <p><strong>Parentesco:</strong> {patient.family_contact_relationship}</p>
-              </div>
-            </div>
+            )}
           </div>
         ))}
       </div>

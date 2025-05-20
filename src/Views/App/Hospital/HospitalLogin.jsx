@@ -27,36 +27,49 @@ export default function HospitalLogin() {
   };
 
   return (
-    <main>
-      <h1>Login do Hospital</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="hospital_id">ID do Hospital</label>
-          <input
-            type="number"
-            id="hospital_id"
-            name="hospital_id"
-            value={formData.hospital_id}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="hospital_password">Senha</label>
-          <input
-            type="password"
-            id="hospital_password"
-            name="hospital_password"
-            value={formData.hospital_password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <div>
-          <button type="submit">Entrar</button>
-        </div>
-      </form>
+    <main className="d-flex justify-content-center align-items-center vh-100 bg-light">
+      <div className="card p-4 shadow-sm" style={{ maxWidth: "400px", width: "100%" }}>
+        <h1 className="mb-4 text-center">Login do Hospital</h1>
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="mb-3">
+            <label htmlFor="hospital_id" className="form-label">
+              ID do Hospital
+            </label>
+            <input
+              type="number"
+              id="hospital_id"
+              name="hospital_id"
+              value={formData.hospital_id}
+              onChange={handleChange}
+              className="form-control"
+              placeholder="Digite seu ID"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="hospital_password" className="form-label">
+              Senha
+            </label>
+            <input
+              type="password"
+              id="hospital_password"
+              name="hospital_password"
+              value={formData.hospital_password}
+              onChange={handleChange}
+              className="form-control"
+              placeholder="Digite sua senha"
+              required
+            />
+          </div>
+
+          {error && <div className="alert alert-danger">{error}</div>}
+
+          <button type="submit" className="btn btn-primary w-100">
+            Entrar
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

@@ -13,16 +13,20 @@ export default function Home() {
   const { user } = useContext(AuthContext);
   const { hospital } = useContext(HospitalAuthContext);
 
-  const loggedAs = hospital ? 'hospital' : user ? 'user' : null;
+  const loggedAs = hospital ? "hospital" : user ? "user" : null;
 
   return (
-    <div>
-      <header>
-        <h2>Bem-vindo ao HealthPoint</h2>
-        <p>Conectando voluntários e hospitais em uma só missão: salvar vidas.</p>
+    <div className="container py-5">
+      <header className="text-center mb-5">
+        <h2 className="fw-bold" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
+          Bem-vindo ao HealthPoint
+        </h2>
+        <p className="text-secondary fs-5">
+          Conectando voluntários e hospitais em uma só missão: salvar vidas.
+        </p>
       </header>
 
-      {loggedAs === 'user' && (
+      {loggedAs === "user" && (
         user.user_role === "admin" ? (
           <AdminDashboard user={user} />
         ) : (
@@ -30,48 +34,61 @@ export default function Home() {
         )
       )}
 
-      {loggedAs === 'hospital' && <HospitalDashboard hospital={hospital} />}
+      {loggedAs === "hospital" && <HospitalDashboard hospital={hospital} />}
 
       {!loggedAs && (
-        <section>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              gap: "40px",
-              flexWrap: "wrap",
-              marginTop: "40px"
-            }}
-          >
-            <article style={{ textAlign: "center", maxWidth: "300px" }}>
+        <section className="d-flex flex-wrap justify-content-center gap-4">
+          {[{
+            img: VolunteerImage,
+            alt: "Voluntário",
+            title: "Você quer ser voluntário?",
+            description: "Cadastre-se como voluntário e ajude hospitais a salvar vidas.",
+            link: "/register",
+            buttonText: "Quero ser voluntário",
+            btnVariant: "primary",
+          },{
+            img: hospitalImage,
+            alt: "Hospital",
+            title: "Cadastrar meu hospital",
+            description: "Registre seu hospital e receba voluntários rapidamente.",
+            link: "/HospitalLogin",
+            buttonText: "Cadastrar hospital",
+            btnVariant: "outline-primary",
+          }].map(({ img, alt, title, description, link, buttonText, btnVariant }) => (
+            <div
+              key={title}
+              className="d-flex flex-column align-items-center text-center"
+              style={{
+                width: "280px",
+                border: "1px solid #e0e0e0",
+                borderRadius: "12px",
+                padding: "24px",
+                backgroundColor: "#fafafa",
+                transition: "background-color 0.3s ease",
+                cursor: "default",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#f0f8ff")}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#fafafa")}
+            >
               <img
-                src={VolunteerImage}
-                alt="Voluntário"
-                style={{ width: "250px" }}
+                src={img}
+                alt={alt}
+                style={{ width: "160px", marginBottom: "20px", borderRadius: "8px" }}
               />
-              <h3>Você quer ser voluntário?</h3>
-              <p>Cadastre-se como voluntário e ajude hospitais a salvar vidas.</p>
-              <a href="/register">Quero ser voluntário</a>
-            </article>
-
-            <article style={{ textAlign: "center", maxWidth: "300px" }}>
-              <img
-                src={hospitalImage}
-                alt="Hospital"
-                style={{ width: "250px" }}
-              />
-              <h3>Cadastrar meu hospital</h3>
-              <p>Registre seu hospital e receba voluntários rapidamente.</p>
-              <a href="/HospitalLogin">Cadastrar hospital</a>
-            </article>
-          </div>
-
-          <footer style={{ marginTop: "40px", textAlign: "center" }}>
-            <h4>Faça parte desta missão!</h4>
-            <p>Juntos, podemos fazer a diferença em milhares de vidas.</p>
-          </footer>
+              <h3 className="fw-semibold mb-3" style={{ color: "#0d6efd" }}>{title}</h3>
+              <p className="text-muted mb-4" style={{ fontSize: "1rem", lineHeight: "1.4" }}>{description}</p>
+              <a href={link} className={`btn btn-${btnVariant} px-4 py-2 fw-semibold`} style={{ borderRadius: "6px", fontSize: "1rem" }}>
+                {buttonText}
+              </a>
+            </div>
+          ))}
         </section>
+      )}
+
+      {!loggedAs && (
+        <footer className="mt-5 text-center text-muted" style={{ fontSize: "0.95rem" }}>
+          <p>Faça parte desta missão! Juntos, podemos fazer a diferença em milhares de vidas.</p>
+        </footer>
       )}
     </div>
   );
