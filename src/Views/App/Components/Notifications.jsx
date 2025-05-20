@@ -102,13 +102,11 @@ export default function NotificationsPage() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div>
       <h2>
         Notificações{" "}
         {unreadCount > 0 && (
-          <span style={{ color: "red" }}>
-            ({unreadCount} nova{unreadCount > 1 ? "s" : ""})
-          </span>
+          <span>({unreadCount} nova{unreadCount > 1 ? "s" : ""})</span>
         )}
       </h2>
 
@@ -117,28 +115,20 @@ export default function NotificationsPage() {
       ) : (
         <div>
           {notifications.map((notif) => (
-            <div
-              key={notif.notification_id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "1rem",
-                marginBottom: "1rem",
-                backgroundColor: notif.is_read ? "#f9f9f9" : "#fff4f4",
-              }}
-            >
+            <div key={notif.notification_id} style={{ marginBottom: "1rem" }}>
               <strong>{notif.title}</strong>
               <p>{notif.message}</p>
               <small>{new Date(notif.created_at).toLocaleString()}</small>
-              <div style={{ marginTop: "0.5rem" }}>
+              <div>
                 {notif.is_read ? (
                   <span style={{ color: "green" }}>✔ Lida</span>
                 ) : (
                   <button onClick={() => markAsRead(notif.notification_id)}>
-                    Marcar como lida
+                    📩 Marcar como lida
                   </button>
                 )}
               </div>
+              <hr />
             </div>
           ))}
         </div>

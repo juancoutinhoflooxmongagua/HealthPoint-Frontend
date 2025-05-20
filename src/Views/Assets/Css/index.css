@@ -1,3 +1,27 @@
+body.light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark .card,
+body.dark .bg-white {
+  background-color: #1e1e1e !important;
+  color: #f1f1f1 !important;
+}
+
+body.dark .nav-link {
+  color: #f1f1f1 !important;
+}
+
+body.light .nav-link {
+  color: #212529 !important;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;

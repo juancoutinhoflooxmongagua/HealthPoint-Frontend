@@ -6,6 +6,7 @@ export const HospitalAuthContext = createContext();
 export function HospitalAuthProvider({ children }) {
   const [hospital, setHospital] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("hospitalToken") || null);
+  const [isLoading, setIsLoading] = useState(true); // NOVO: para controle de carregamento
 
   const fetchHospitalProfile = async (tokenToUse) => {
     try {
@@ -15,6 +16,7 @@ export function HospitalAuthProvider({ children }) {
       );
 
       if (data?.hospital_id) {
+        console.log("Perfil do hospital carregado:", data);
         setHospital(data);
         setToken(tokenToUse);
       } else {
@@ -27,19 +29,23 @@ export function HospitalAuthProvider({ children }) {
       setHospital(null);
       setToken(null);
       localStorage.removeItem("hospitalToken");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     if (token) {
       fetchHospitalProfile(token);
+    } else {
+      setIsLoading(false);
     }
   }, [token]);
 
-  const loginHospital = ({ hospital_id, token: newToken }) => {
+  const loginHospital = ({ token: newToken }) => {
     localStorage.setItem("hospitalToken", newToken);
     setToken(newToken);
-    setHospital({ hospital_id }); // vai atualizar com fetch do perfil
+    // ⚠️ Removido: setHospital({ hospital_id });
     fetchHospitalProfile(newToken);
   };
 
@@ -50,7 +56,15 @@ export function HospitalAuthProvider({ children }) {
   };
 
   return (
-    <HospitalAuthContext.Provider value={{ hospital, token, loginHospital, logoutHospital }}>
+    <HospitalAuthContext.Provider
+      value={{
+        hospital,
+        token,
+        loginHospital,
+        logoutHospital,
+        isLoading, // exposto para componentes poderem usar
+      }}
+    >
       {children}
     </HospitalAuthContext.Provider>
   );

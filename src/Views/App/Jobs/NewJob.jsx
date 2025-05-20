@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 
 export default function NewJob() {
+  const { hospital } = useContext(HospitalAuthContext);
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [jobPoint, setJobPoint] = useState("");
@@ -15,18 +17,18 @@ export default function NewJob() {
         {
           job_title: jobTitle,
           job_description: jobDescription,
-          job_points: jobPoint,
+          job_points: Number(jobPoint),
           job_type: jobType,
+          hospital_id: hospital.id,
         }
       );
       alert("Trabalho cadastrado com sucesso!");
-      // Resetar campos após sucesso
       setJobTitle("");
       setJobDescription("");
       setJobPoint("");
       setJobType("");
     } catch (err) {
-      console.error(err);
+      console.error("Erro ao cadastrar trabalho:", err.response?.data || err.message);
       alert("Erro ao cadastrar trabalho.");
     }
   };
@@ -34,7 +36,7 @@ export default function NewJob() {
   return (
     <div style={{ maxWidth: 500, margin: "2rem auto", fontFamily: "Arial, sans-serif" }}>
       <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>Cadastrar Novo Trabalho</h2>
-      
+
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <label htmlFor="job_title" style={{ marginBottom: 4, fontWeight: "600" }}>Título do Trabalho</label>
