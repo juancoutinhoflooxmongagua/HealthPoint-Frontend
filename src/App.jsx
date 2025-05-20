@@ -65,7 +65,6 @@ export default function App() {
                 <Route path="/Jobs/:id" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
                 <Route path="/SearchUsers" element={<div className="w-100 px-4 mt-5 pt-3"><SearchUsers /></div>} />
                 <Route path="/Application" element={<div className="w-100 px-4 mt-5 pt-3"><Application /></div>} />
-                <Route path="/DashboardAdmin" element={<div className="w-100 px-4 mt-5 pt-3"><DashboardAdmin /></div>} />
                 <Route path="/Statistics" element={<div className="w-100 px-4 mt-5 pt-3"><Statistics /></div>} />
                 <Route path="/NewHospital" element={<div className="w-100 px-4 mt-5 pt-3"><NewHospital /></div>} />
                 <Route path="/Leaderboard" element={<div className="w-100 px-4 mt-5 pt-3"><Leaderboard /></div>} />
@@ -73,6 +72,7 @@ export default function App() {
 
                 {/* Rotas com Sidebar */}
                 <Route element={<SidebarLayout />}>
+                <Route path="/DashboardAdmin" element={<div className="w-100 px-4 mt-5 pt-3"><DashboardAdmin /></div>} />
                   <Route path="/Notifications" element={<div className="w-100 px-4 mt-5 pt-3"><NotificationsPage /></div>} />
                   <Route path="/Config" element={<ConfigPage />} />
                   <Route path="/HospitalHome" element={<HospitalHome />} />

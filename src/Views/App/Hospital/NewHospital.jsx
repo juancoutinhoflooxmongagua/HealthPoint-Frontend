@@ -63,52 +63,60 @@ export default function NewHospital() {
   };
 
   return (
-    <main>
-      <h1>Cadastrar novo Hospital</h1>
+    <main className="container my-5" style={{ maxWidth: "600px" }}>
+      <div className="p-4 bg-white rounded shadow-sm">
+        <h1 className="mb-4 text-primary text-center">Cadastrar novo Hospital</h1>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="text-danger fw-semibold">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="hospital_name">Nome do Hospital</label><br />
-          <input
-            type="text"
-            id="hospital_name"
-            name="hospital_name"
-            value={hospitalData.hospital_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="hospital_name" className="form-label fw-semibold">Nome do Hospital</label>
+            <input
+              type="text"
+              id="hospital_name"
+              name="hospital_name"
+              className="form-control"
+              value={hospitalData.hospital_name}
+              onChange={handleChange}
+              required
+              placeholder="Digite o nome do hospital"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="hospital_address">Endereço do Hospital</label><br />
-          <input
-            type="text"
-            id="hospital_address"
-            name="hospital_address"
-            value={hospitalData.hospital_address}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label htmlFor="hospital_address" className="form-label fw-semibold">Endereço do Hospital</label>
+            <input
+              type="text"
+              id="hospital_address"
+              name="hospital_address"
+              className="form-control"
+              value={hospitalData.hospital_address}
+              onChange={handleChange}
+              required
+              placeholder="Digite o endereço do hospital"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="hospital_phone">Telefone do Hospital</label><br />
-          <input
-            type="text"
-            id="hospital_phone"
-            name="hospital_phone"
-            value={hospitalData.hospital_phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="mb-4">
+            <label htmlFor="hospital_phone" className="form-label fw-semibold">Telefone do Hospital</label>
+            <input
+              type="text"
+              id="hospital_phone"
+              name="hospital_phone"
+              className="form-control"
+              value={hospitalData.hospital_phone}
+              onChange={handleChange}
+              required
+              placeholder="Digite o telefone do hospital"
+            />
+          </div>
 
-        <div>
-          <button type="submit">Cadastrar Hospital</button>
-        </div>
-      </form>
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary btn-lg">Cadastrar Hospital</button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 }

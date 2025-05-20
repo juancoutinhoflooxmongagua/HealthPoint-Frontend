@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 import { AuthContext } from "../../../Services/Context/authContext";
+import { useTheme } from "../../../Services/Context/themeContext";
 
 export default function Nav() {
   const { user, logoutUser } = useContext(AuthContext);
   const { hospital, logoutHospital } = useContext(HospitalAuthContext);
+  const { theme } = useTheme();
 
   const handleLogout = () => {
     if (user) logoutUser();
@@ -14,8 +16,12 @@ export default function Nav() {
 
   const loggedAs = hospital ? "hospital" : user ? "user" : null;
 
+  const navbarClass = theme === "dark"
+    ? "navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top"
+    : "navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top";
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+    <nav className={navbarClass}>
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
           HealthPoint
@@ -38,11 +44,7 @@ export default function Nav() {
             {loggedAs === "hospital" && (
               <>
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    activeclassname="active"
-                    to="/HospitalProfile"
-                  >
+                  <NavLink className="nav-link" to="/HospitalProfile">
                     Perfil Hospital
                   </NavLink>
                 </li>
@@ -61,20 +63,12 @@ export default function Nav() {
             {loggedAs === "user" && (
               <>
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    activeclassname="active"
-                    to="/UserProfile"
-                  >
+                  <NavLink className="nav-link" to="/UserProfile">
                     Perfil
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    activeclassname="active"
-                    to="/Notifications"
-                  >
+                  <NavLink className="nav-link" to="/Notifications">
                     Notificações
                   </NavLink>
                 </li>
@@ -93,20 +87,12 @@ export default function Nav() {
             {!loggedAs && (
               <>
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    activeclassname="active"
-                    to="/login"
-                  >
+                  <NavLink className="nav-link" to="/login">
                     Login Usuário
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    activeclassname="active"
-                    to="/HospitalLogin"
-                  >
+                  <NavLink className="nav-link" to="/HospitalLogin">
                     Login Hospital
                   </NavLink>
                 </li>
