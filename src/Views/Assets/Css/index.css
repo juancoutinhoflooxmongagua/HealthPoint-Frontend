@@ -20,7 +20,6 @@ body.light .nav-link {
 }
 body.light .nav-link:hover {
   color: #0d6efd !important;
-  text-decoration: underline;
 }
 
 body.light .btn-primary {
