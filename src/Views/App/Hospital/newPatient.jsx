@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useTheme } from "../../../Services/Context/themeContext";
+import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
+import { useMessage } from "../../../Services/Context/messageContext"; // usa o hook useMessage
 
 export default function NewPatient() {
   const { theme } = useTheme();
+  const { hospital } = useContext(HospitalAuthContext);
+  const { showMessage } = useMessage(); // pega showMessage
 
   const [patientData, setPatientData] = useState({
     patient_name: "",
@@ -12,7 +16,7 @@ export default function NewPatient() {
     birth_date: "",
     gender: "",
     phone: "",
-    hospital_id: "",
+    hospital_id: hospital ? hospital.id : "", 
   });
 
   const handleChange = (e) => {
@@ -21,18 +25,24 @@ export default function NewPatient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const dataToSend = {
+      ...patientData,
+      hospital_id: hospital ? hospital.id : patientData.hospital_id,
+    };
+
     try {
       const response = await fetch(
         "https://healthpoint-backend-production.up.railway.app/patients",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(patientData),
+          body: JSON.stringify(dataToSend),
         }
       );
 
       if (response.ok) {
-        alert("Paciente cadastrado com sucesso!");
+        showMessage("✅ Paciente cadastrado com sucesso!", "success");
         setPatientData({
           patient_name: "",
           patient_address: "",
@@ -41,14 +51,18 @@ export default function NewPatient() {
           birth_date: "",
           gender: "",
           phone: "",
-          hospital_id: "",
+          hospital_id: hospital ? hospital.id : "",
         });
       } else {
-        alert("Erro ao cadastrar paciente.");
+        const errorData = await response.json();
+        showMessage(
+          errorData.message || "❌ Erro ao cadastrar paciente. Verifique os dados.",
+          "error"
+        );
       }
     } catch (error) {
       console.error("Erro ao cadastrar paciente:", error);
-      alert("Erro ao cadastrar paciente.");
+      showMessage("❌ Erro inesperado ao cadastrar paciente.", "error");
     }
   };
 
@@ -68,15 +82,12 @@ export default function NewPatient() {
         </h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Linha 1: Nome + CPF */}
+          {/* Linha 1 */}
           <div className="row mb-3">
             <div className="col-md-7">
-              <label htmlFor="patient_name" className="form-label">
-                Nome
-              </label>
+              <label className="form-label">Nome</label>
               <input
                 type="text"
-                id="patient_name"
                 name="patient_name"
                 value={patientData.patient_name}
                 onChange={handleChange}
@@ -87,12 +98,9 @@ export default function NewPatient() {
               />
             </div>
             <div className="col-md-5">
-              <label htmlFor="cpf" className="form-label">
-                CPF
-              </label>
+              <label className="form-label">CPF</label>
               <input
                 type="text"
-                id="cpf"
                 name="cpf"
                 value={patientData.cpf}
                 onChange={handleChange}
@@ -104,15 +112,12 @@ export default function NewPatient() {
             </div>
           </div>
 
-          {/* Linha 2: Endereço + Hospital ID */}
+          {/* Linha 2 */}
           <div className="row mb-3">
             <div className="col-md-8">
-              <label htmlFor="patient_address" className="form-label">
-                Endereço
-              </label>
+              <label className="form-label">Endereço</label>
               <input
                 type="text"
-                id="patient_address"
                 name="patient_address"
                 value={patientData.patient_address}
                 onChange={handleChange}
@@ -123,32 +128,26 @@ export default function NewPatient() {
               />
             </div>
             <div className="col-md-4">
-              <label htmlFor="hospital_id" className="form-label">
-                Hospital ID
-              </label>
+              <label className="form-label">Hospital ID</label>
               <input
                 type="text"
-                id="hospital_id"
                 name="hospital_id"
                 value={patientData.hospital_id}
                 onChange={handleChange}
                 className={`form-control ${
                   theme === "dark" ? "bg-secondary text-light border-0" : ""
                 }`}
-                required
+                disabled
               />
             </div>
           </div>
 
-          {/* Linha 3: Email + Telefone */}
+          {/* Linha 3 */}
           <div className="row mb-3">
             <div className="col-md-7">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
+              <label className="form-label">Email</label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 value={patientData.email}
                 onChange={handleChange}
@@ -159,12 +158,9 @@ export default function NewPatient() {
               />
             </div>
             <div className="col-md-5">
-              <label htmlFor="phone" className="form-label">
-                Telefone
-              </label>
+              <label className="form-label">Telefone</label>
               <input
                 type="tel"
-                id="phone"
                 name="phone"
                 value={patientData.phone}
                 onChange={handleChange}
@@ -176,15 +172,12 @@ export default function NewPatient() {
             </div>
           </div>
 
-          {/* Linha 4: Data de Nascimento + Gênero */}
+          {/* Linha 4 */}
           <div className="row mb-4">
             <div className="col-md-6">
-              <label htmlFor="birth_date" className="form-label">
-                Data de Nascimento
-              </label>
+              <label className="form-label">Data de Nascimento</label>
               <input
                 type="date"
-                id="birth_date"
                 name="birth_date"
                 value={patientData.birth_date}
                 onChange={handleChange}
@@ -195,11 +188,8 @@ export default function NewPatient() {
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="gender" className="form-label">
-                Gênero
-              </label>
+              <label className="form-label">Gênero</label>
               <select
-                id="gender"
                 name="gender"
                 value={patientData.gender}
                 onChange={handleChange}
