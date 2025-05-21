@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useError } from "../../../Services/Context/errorContext";
+import { useMessage } from "../../../Services/Context/messageContext";
 
 export default function NewHospital() {
-  const { showError } = useError();
+  const { showMessage } = useMessage();
 
   const [hospitalData, setHospitalData] = useState({
     hospital_name: "",
@@ -13,10 +13,8 @@ export default function NewHospital() {
 
   const [hospitals, setHospitals] = useState([]);
 
-  // Pega token do localStorage
   const token = localStorage.getItem("token");
 
-  // Função para atualizar o estado conforme o input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setHospitalData((prev) => ({ ...prev, [name]: value }));
@@ -24,7 +22,7 @@ export default function NewHospital() {
 
   useEffect(() => {
     if (!token) {
-      showError("Token não encontrado.");
+      showMessage("Token não encontrado.", "error");
       return;
     }
 
@@ -35,15 +33,15 @@ export default function NewHospital() {
       setHospitals(res.data);
     })
     .catch(() => {
-      showError("Erro ao buscar hospitais.");
+      showMessage("Erro ao buscar hospitais.", "error");
     });
-  }, [token, showError]);
+  }, [token, showMessage]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!token) {
-      showError("Token não encontrado.");
+      showMessage("Token não encontrado.", "error");
       return;
     }
 
@@ -51,7 +49,7 @@ export default function NewHospital() {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(() => {
-      alert("Hospital cadastrado com sucesso!");
+      showMessage("Hospital cadastrado com sucesso!", "success");
       setHospitalData({
         hospital_name: "",
         hospital_address: "",
@@ -59,7 +57,7 @@ export default function NewHospital() {
       });
     })
     .catch(() => {
-      showError("Erro ao cadastrar hospital.");
+      showMessage("Erro ao cadastrar hospital.", "error");
     });
   };
 
@@ -67,8 +65,6 @@ export default function NewHospital() {
     <main className="container my-5" style={{ maxWidth: "600px" }}>
       <div className="p-4 bg-white rounded shadow-sm">
         <h1 className="mb-4 text-primary text-center">Cadastrar novo Hospital</h1>
-
-        {/* Removido erro local, agora o erro é global via contexto */}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

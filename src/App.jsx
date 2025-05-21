@@ -7,7 +7,7 @@ import './Views/Assets/Css/index.css';
 import { AuthProvider } from "./Services/Context/authContext";
 import { HospitalAuthProvider } from "./Services/Context/hospitalContext";
 import { ThemeProvider } from "./Services/Context/themeContext";
-import { ErrorProvider } from "./Services/Context/errorContext";
+import { MessageProvider } from "./Services/Context/messageContext";
 
 // Components
 import Nav from "./Views/App/Components/Nav";
@@ -15,13 +15,13 @@ import Footer from "./Views/App/Components/Footer";
 import ActionButtons from "./Views/App/Components/ActionButtons";
 import SidebarLayout from "./Views/App/Components/SidebarLayout";
 import NotificationsPage from "./Views/App/Components/Notifications";
+import ConfigPage from "./Views/App/Components/Config";
 
 // Basics
 import Register from "./Views/App/Home/Register";
 import Login from "./Views/App/Home/Login";
 import Home from "./Views/App/Home/Home";
 import Jobs from "./Views/App/Jobs/Jobs";
-import ConfigPage from "./Views/App/Components/Config";
 
 // Users
 import UserProfile from "./Views/App/Users/UserProfile";
@@ -46,7 +46,7 @@ import NewPatient from "./Views/App/hospital/newPatient";
 
 export default function App() {
   return (
-    <ErrorProvider>
+    <MessageProvider>
       <ThemeProvider>
         <AuthProvider>
           <HospitalAuthProvider>
@@ -54,33 +54,44 @@ export default function App() {
               <Nav />
               <div className="main fade-in">
                 <Routes>
-                  {/* Rotas sem Sidebar */}
-                  <Route path="/" element={<div className="w-100 px-4 mt-5 pt-3"><Home /></div>} />
-                  <Route path="/register" element={<div className="w-100 px-4 mt-5 pt-3"><Register /></div>} />
-                  <Route path="/login" element={<div className="w-100 px-4 mt-5 pt-3"><Login /></div>} />
-                  <Route path="/HospitalLogin" element={<div className="w-100 px-4 mt-5 pt-3"><HospitalLogin /></div>} />
-                  <Route path="/UserProfile" element={<div className="w-100 px-4 mt-5 pt-3"><UserProfile /></div>} />
-                  <Route path="/Jobs" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
-                  <Route path="/Jobs/:id" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
-                  <Route path="/SearchUsers" element={<div className="w-100 px-4 mt-5 pt-3"><SearchUsers /></div>} />
-                  <Route path="/Application" element={<div className="w-100 px-4 mt-5 pt-3"><Application /></div>} />
-                  <Route path="/Statistics" element={<div className="w-100 px-4 mt-5 pt-3"><Statistics /></div>} />
-                  <Route path="/NewHospital" element={<div className="w-100 px-4 mt-5 pt-3"><NewHospital /></div>} />
-                  <Route path="/Leaderboard" element={<div className="w-100 px-4 mt-5 pt-3"><Leaderboard /></div>} />
-                  <Route path="/Requests" element={<div className="w-100 px-4 mt-5 pt-3"><Requests /></div>} />
 
-                  {/* Rotas com Sidebar */}
+                  {/* 🔓 Rotas Públicas (Sem Sidebar) */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/HospitalLogin" element={<HospitalLogin />} />
+                  <Route path="/NewHospital" element={<NewHospital />} />
+
+                  {/* 🔒 Rotas Protegidas com Sidebar (Usuário, Hospital ou Admin) */}
                   <Route element={<SidebarLayout />}>
-                    <Route path="/DashboardAdmin" element={<div className="w-100 px-4 mt-5 pt-3"><DashboardAdmin /></div>} />
-                    <Route path="/Notifications" element={<div className="w-100 px-4 mt-5 pt-3"><NotificationsPage /></div>} />
-                    <Route path="/Config" element={<ConfigPage />} />
+
+                    {/* 🧑‍💼 Usuário */}
+                    <Route path="/UserProfile" element={<UserProfile />} />
+                    <Route path="/Jobs" element={<Jobs />} />
+                    <Route path="/Jobs/:id" element={<Jobs />} />
+                    <Route path="/Leaderboard" element={<Leaderboard />} />
+
+                    {/* 🏥 Hospital */}
                     <Route path="/HospitalHome" element={<HospitalHome />} />
                     <Route path="/HospitalProfile" element={<HospitalProfile />} />
                     <Route path="/NewJob" element={<NewJob />} />
-                    <Route path="/Hospital" element={<Hospital />} />
                     <Route path="/Patients" element={<Patients />} />
                     <Route path="/NewPatients" element={<NewPatient />} />
+
+                    {/* 🛠️ Admin */}
+                    <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
+                    <Route path="/SearchUsers" element={<SearchUsers />} />
+                    <Route path="/Application" element={<Application />} />
+                    <Route path="/Statistics" element={<Statistics />} />
+                    <Route path="/Requests" element={<Requests />} />
+                    <Route path="/Hospital" element={<Hospital />} />
+
+                    {/* 🔔 Gerais */}
+                    <Route path="/Notifications" element={<NotificationsPage />} />
+                    <Route path="/Config" element={<ConfigPage />} />
+
                   </Route>
+
                 </Routes>
                 <Footer />
                 <ActionButtons />
@@ -89,6 +100,6 @@ export default function App() {
           </HospitalAuthProvider>
         </AuthProvider>
       </ThemeProvider>
-    </ErrorProvider>
+    </MessageProvider>
   );
 }
