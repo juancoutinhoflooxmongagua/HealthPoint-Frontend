@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useError } from "../../../Services/Context/errorContext";
 
 export default function NewHospital() {
+  const { showError } = useError();
+
   const [hospitalData, setHospitalData] = useState({
     hospital_name: "",
     hospital_address: "",
@@ -9,12 +12,19 @@ export default function NewHospital() {
   });
 
   const [hospitals, setHospitals] = useState([]);
-  const [error, setError] = useState(null);
+
+  // Pega token do localStorage
   const token = localStorage.getItem("token");
+
+  // Função para atualizar o estado conforme o input
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setHospitalData((prev) => ({ ...prev, [name]: value }));
+  };
 
   useEffect(() => {
     if (!token) {
-      setError("Token não encontrado.");
+      showError("Token não encontrado.");
       return;
     }
 
@@ -23,26 +33,17 @@ export default function NewHospital() {
     })
     .then((res) => {
       setHospitals(res.data);
-      setError(null);
     })
     .catch(() => {
-      setError("Erro ao buscar hospitais.");
+      showError("Erro ao buscar hospitais.");
     });
-  }, [token]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setHospitalData({
-      ...hospitalData,
-      [name]: value
-    });
-  };
+  }, [token, showError]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!token) {
-      setError("Token não encontrado.");
+      showError("Token não encontrado.");
       return;
     }
 
@@ -58,7 +59,7 @@ export default function NewHospital() {
       });
     })
     .catch(() => {
-      alert("Erro ao cadastrar hospital.");
+      showError("Erro ao cadastrar hospital.");
     });
   };
 
@@ -67,7 +68,7 @@ export default function NewHospital() {
       <div className="p-4 bg-white rounded shadow-sm">
         <h1 className="mb-4 text-primary text-center">Cadastrar novo Hospital</h1>
 
-        {error && <p className="text-danger fw-semibold">{error}</p>}
+        {/* Removido erro local, agora o erro é global via contexto */}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

@@ -7,6 +7,7 @@ import './Views/Assets/Css/index.css';
 import { AuthProvider } from "./Services/Context/authContext";
 import { HospitalAuthProvider } from "./Services/Context/hospitalContext";
 import { ThemeProvider } from "./Services/Context/themeContext";
+import { ErrorProvider } from "./Services/Context/errorContext";
 
 // Components
 import Nav from "./Views/App/Components/Nav";
@@ -45,48 +46,49 @@ import NewPatient from "./Views/App/hospital/newPatient";
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <HospitalAuthProvider>
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <Nav></Nav>
-            <div className="main">
-              <Routes>
-                {/* Rotas sem Sidebar */}
-                <Route path="/" element={<div className="w-100 px-4 mt-5 pt-3"><Home /></div>} />
-                <Route path="/register" element={<div className="w-100 px-4 mt-5 pt-3"><Register /></div>} />
-                <Route path="/login" element={<div className="w-100 px-4 mt-5 pt-3"><Login /></div>} />
-                <Route path="/HospitalLogin" element={<div className="w-100 px-4 mt-5 pt-3"><HospitalLogin /></div>} />
-                <Route path="/UserProfile" element={<div className="w-100 px-4 mt-5 pt-3"><UserProfile /></div>} />
-                <Route path="/Jobs" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
-                <Route path="/Jobs/:id" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
-                <Route path="/SearchUsers" element={<div className="w-100 px-4 mt-5 pt-3"><SearchUsers /></div>} />
-                <Route path="/Application" element={<div className="w-100 px-4 mt-5 pt-3"><Application /></div>} />
-                <Route path="/Statistics" element={<div className="w-100 px-4 mt-5 pt-3"><Statistics /></div>} />
-                <Route path="/NewHospital" element={<div className="w-100 px-4 mt-5 pt-3"><NewHospital /></div>} />
-                <Route path="/Leaderboard" element={<div className="w-100 px-4 mt-5 pt-3"><Leaderboard /></div>} />
-                <Route path="/Requests" element={<div className="w-100 px-4 mt-5 pt-3"><Requests /></div>} />
+    <ErrorProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <HospitalAuthProvider>
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <Nav />
+              <div className="main fade-in">
+                <Routes>
+                  {/* Rotas sem Sidebar */}
+                  <Route path="/" element={<div className="w-100 px-4 mt-5 pt-3"><Home /></div>} />
+                  <Route path="/register" element={<div className="w-100 px-4 mt-5 pt-3"><Register /></div>} />
+                  <Route path="/login" element={<div className="w-100 px-4 mt-5 pt-3"><Login /></div>} />
+                  <Route path="/HospitalLogin" element={<div className="w-100 px-4 mt-5 pt-3"><HospitalLogin /></div>} />
+                  <Route path="/UserProfile" element={<div className="w-100 px-4 mt-5 pt-3"><UserProfile /></div>} />
+                  <Route path="/Jobs" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
+                  <Route path="/Jobs/:id" element={<div className="w-100 px-4 mt-5 pt-3"><Jobs /></div>} />
+                  <Route path="/SearchUsers" element={<div className="w-100 px-4 mt-5 pt-3"><SearchUsers /></div>} />
+                  <Route path="/Application" element={<div className="w-100 px-4 mt-5 pt-3"><Application /></div>} />
+                  <Route path="/Statistics" element={<div className="w-100 px-4 mt-5 pt-3"><Statistics /></div>} />
+                  <Route path="/NewHospital" element={<div className="w-100 px-4 mt-5 pt-3"><NewHospital /></div>} />
+                  <Route path="/Leaderboard" element={<div className="w-100 px-4 mt-5 pt-3"><Leaderboard /></div>} />
+                  <Route path="/Requests" element={<div className="w-100 px-4 mt-5 pt-3"><Requests /></div>} />
 
-                {/* Rotas com Sidebar */}
-                <Route element={<SidebarLayout />}>
-                <Route path="/DashboardAdmin" element={<div className="w-100 px-4 mt-5 pt-3"><DashboardAdmin /></div>} />
-                  <Route path="/Notifications" element={<div className="w-100 px-4 mt-5 pt-3"><NotificationsPage /></div>} />
-                  <Route path="/Config" element={<ConfigPage />} />
-                  <Route path="/HospitalHome" element={<HospitalHome />} />
-                  <Route path="/HospitalProfile" element={<HospitalProfile />} />
-                  <Route path="/NewJob" element={<NewJob />} />
-                  <Route path="/Hospital" element={<Hospital />} />
-                  <Route path="/Patients" element={<Patients />} />
-                  <Route path="/NewPatients" element={<NewPatient />} />
-                </Route>
-              </Routes>
-
-              <Footer />
-              <ActionButtons />
-            </div>
-          </BrowserRouter>
-        </HospitalAuthProvider>
-      </AuthProvider>
-    </ThemeProvider>
+                  {/* Rotas com Sidebar */}
+                  <Route element={<SidebarLayout />}>
+                    <Route path="/DashboardAdmin" element={<div className="w-100 px-4 mt-5 pt-3"><DashboardAdmin /></div>} />
+                    <Route path="/Notifications" element={<div className="w-100 px-4 mt-5 pt-3"><NotificationsPage /></div>} />
+                    <Route path="/Config" element={<ConfigPage />} />
+                    <Route path="/HospitalHome" element={<HospitalHome />} />
+                    <Route path="/HospitalProfile" element={<HospitalProfile />} />
+                    <Route path="/NewJob" element={<NewJob />} />
+                    <Route path="/Hospital" element={<Hospital />} />
+                    <Route path="/Patients" element={<Patients />} />
+                    <Route path="/NewPatients" element={<NewPatient />} />
+                  </Route>
+                </Routes>
+                <Footer />
+                <ActionButtons />
+              </div>
+            </BrowserRouter>
+          </HospitalAuthProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorProvider>
   );
 }
