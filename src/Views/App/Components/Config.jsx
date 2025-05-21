@@ -1,9 +1,14 @@
-// Views/App/Components/Config.jsx
 import React from "react";
-import { useTheme } from "../../../Services/Context/themeContext"; // <-- Correto
+import { useTheme } from "../../../Services/Context/themeContext";
 
 export default function Config() {
   const { theme, toggleTheme } = useTheme();
+
+  const getThemeName = () => {
+    if (theme === "light") return "Claro";
+    if (theme === "dark") return "Escuro";
+    if (theme === "frutiger") return "Frutiger Aero";
+  };
 
   return (
     <div className="card shadow-sm">
@@ -11,7 +16,9 @@ export default function Config() {
         <h5 className="mb-0">Configurações</h5>
       </div>
       <div className="card-body">
-        <h6 className="card-subtitle mb-3 text-muted">Tema Atual: {theme === "light" ? "Claro" : "Escuro"}</h6>
+        <h6 className="card-subtitle mb-3 text-muted">
+          Tema Atual: {getThemeName()}
+        </h6>
         <button onClick={toggleTheme} className="btn btn-primary">
           Alternar Tema
         </button>

@@ -51,9 +51,6 @@ export default function App() {
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <Nav></Nav>
             <div className="main">
-              {/* Navbar sempre visível */}
-              <div className="rgb-tape"></div>
-
               <Routes>
                 {/* Rotas sem Sidebar */}
                 <Route path="/" element={<div className="w-100 px-4 mt-5 pt-3"><Home /></div>} />
