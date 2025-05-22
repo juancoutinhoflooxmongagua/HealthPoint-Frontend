@@ -36,7 +36,6 @@ export default function Hospital() {
         🏥 Hospitais Cadastrados
       </h1>
 
-      {/* 🔍 Campo de pesquisa */}
       <div className="mb-4">
         <input
           type="text"

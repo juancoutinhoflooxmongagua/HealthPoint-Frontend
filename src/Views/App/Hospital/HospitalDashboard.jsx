@@ -8,6 +8,7 @@ export default function HospitalDashboard() {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
+  const [openJobId, setOpenJobId] = useState(null);
 
   const fetchJobs = async () => {
     const token = localStorage.getItem("hospitalToken");
@@ -24,6 +25,7 @@ export default function HospitalDashboard() {
         }
       );
       setJobs(response.data);
+      if (response.data.length > 0) setOpenJobId(response.data[0].job_id); 
     } catch (error) {
       setErro(error.response?.data?.error || "Erro ao buscar vagas, tente novamente.");
     } finally {
@@ -126,6 +128,9 @@ export default function HospitalDashboard() {
       <h1 className="mb-4 text-center">Olá, {hospital?.hospital_name ?? "Hospital"}!</h1>
       <p className="text-center mb-5">Gerencie suas vagas e acompanhe suas candidaturas.</p>
 
+      <br />
+
+      <h3>Vagas em Aberto</h3>
       {loading && (
         <div className="text-center">
           <div className="spinner-border" role="status" aria-hidden="true"></div>
@@ -137,67 +142,93 @@ export default function HospitalDashboard() {
 
       {!loading && !erro && jobs.length === 0 && <p className="text-center">Nenhuma vaga encontrada.</p>}
 
-      <div className="row">
+      <div className="row gy-4">
         {jobs.map((job) => (
-          <div key={job.job_id} className="col-md-6 mb-4">
-            <div className="card shadow-sm h-100">
-              <div className="card-body d-flex flex-column">
-                <h4 className="card-title">{job.job_title}</h4>
-                <p className="card-subtitle mb-2 text-muted">{job.job_type}</p>
-                <p className="card-text flex-grow-1">{job.job_description}</p>
-                <p>
+          <div key={job.job_id} className="col-12">
+            <div className="card shadow-sm">
+              <div
+                className="card-header d-flex justify-content-between align-items-center"
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  setOpenJobId(openJobId === job.job_id ? null : job.job_id)
+                }
+              >
+                <div>
+                  <h5 className="mb-0">{job.job_title}</h5>
+                  <small className="text-muted">{job.job_type}</small>
+                </div>
+                <div>
                   <strong>Pontos:</strong> {job.job_points}
-                </p>
-
-                <h5>Candidatos:</h5>
-                {job.applications.length === 0 ? (
-                  <p>Nenhum candidato ainda.</p>
-                ) : (
-                  <ul className="list-group list-group-flush">
-                    {job.applications.map((app) => (
-                      <li
-                        key={app.application_id}
-                        className="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-                      >
-                        <div>
-                          <strong>{app.user_name}</strong> ({app.user_email}) {statusBadge(app.application_status)}{" "}
-                          {app.points_awarded && <span className="badge bg-info ms-2">Pontos atribuídos</span>}
-                        </div>
-                        <div className="d-flex gap-2">
-                          {app.application_status === "pending" && (
-                            <>
-                              <button
-                                className="btn btn-success btn-sm"
-                                onClick={() => handleUpdateStatus(app.application_id, "aceita")}
-                                disabled={updatingId === app.application_id}
-                              >
-                                Aceitar
-                              </button>
-                              <button
-                                className="btn btn-danger btn-sm"
-                                onClick={() => handleUpdateStatus(app.application_id, "rejeitada")}
-                                disabled={updatingId === app.application_id}
-                              >
-                                Rejeitar
-                              </button>
-                            </>
-                          )}
-
-                          {app.application_status === "approved" && !app.points_awarded && (
-                            <button
-                              className="btn btn-secondary btn-sm"
-                              onClick={() => handleFinishApplication(app.application_id)}
-                              disabled={updatingId === app.application_id}
-                            >
-                              {updatingId === app.application_id ? "Finalizando..." : "Finalizar trabalho"}
-                            </button>
-                          )}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                </div>
               </div>
+
+              {openJobId === job.job_id && (
+                <div className="card-body border-top">
+                  <p>{job.job_description}</p>
+                  <h6>Candidatos:</h6>
+                  {job.applications.length === 0 ? (
+                    <p>Nenhum candidato ainda.</p>
+                  ) : (
+                    <ul className="list-group">
+                      {job.applications.map((app) => (
+                        <li
+                          key={app.application_id}
+                          className="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                        >
+                          <div>
+                            <strong>{app.user_name}</strong> ({app.user_email}){" "}
+                            {statusBadge(app.application_status)}{" "}
+                            {app.points_awarded && (
+                              <span className="badge bg-info ms-2">
+                                Pontos atribuídos
+                              </span>
+                            )}
+                          </div>
+                          <div className="d-flex gap-2 flex-wrap mt-2 mt-md-0">
+                            {app.application_status === "pending" && (
+                              <>
+                                <button
+                                  className="btn btn-success btn-sm"
+                                  onClick={() =>
+                                    handleUpdateStatus(app.application_id, "aceita")
+                                  }
+                                  disabled={updatingId === app.application_id}
+                                >
+                                  Aceitar
+                                </button>
+                                <button
+                                  className="btn btn-danger btn-sm"
+                                  onClick={() =>
+                                    handleUpdateStatus(app.application_id, "rejeitada")
+                                  }
+                                  disabled={updatingId === app.application_id}
+                                >
+                                  Rejeitar
+                                </button>
+                              </>
+                            )}
+
+                            {app.application_status === "approved" &&
+                              !app.points_awarded && (
+                                <button
+                                  className="btn btn-secondary btn-sm"
+                                  onClick={() =>
+                                    handleFinishApplication(app.application_id)
+                                  }
+                                  disabled={updatingId === app.application_id}
+                                >
+                                  {updatingId === app.application_id
+                                    ? "Finalizando..."
+                                    : "Finalizar trabalho"}
+                                </button>
+                              )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         ))}
