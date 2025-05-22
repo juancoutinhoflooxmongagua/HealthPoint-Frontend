@@ -13,6 +13,9 @@ export default function HospitalDashboard() {
     const token = localStorage.getItem("hospitalToken");
     if (!token || !hospital) return;
 
+    setLoading(true);
+    setErro(null);
+
     try {
       const response = await axios.get(
         "https://healthpoint-backend-production.up.railway.app/hospital/jobs-with-applications",
@@ -21,8 +24,8 @@ export default function HospitalDashboard() {
         }
       );
       setJobs(response.data);
-    } catch {
-      setErro("Erro ao buscar vagas.");
+    } catch (error) {
+      setErro(error.response?.data?.error || "Erro ao buscar vagas, tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -34,12 +37,10 @@ export default function HospitalDashboard() {
 
   const handleUpdateStatus = async (applicationId, newStatus) => {
     const token = localStorage.getItem("hospitalToken");
+    if (!token) return;
+
     const mappedStatus =
-      newStatus === "aceita"
-        ? "approved"
-        : newStatus === "rejeitada"
-        ? "rejected"
-        : newStatus;
+      newStatus === "aceita" ? "approved" : newStatus === "rejeitada" ? "rejected" : newStatus;
 
     try {
       setUpdatingId(applicationId);
@@ -47,9 +48,38 @@ export default function HospitalDashboard() {
         `https://healthpoint-backend-production.up.railway.app/hospital/${applicationId}/status`,
         { status: mappedStatus },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setJobs((prevJobs) =>
+        prevJobs.map((job) => ({
+          ...job,
+          applications: job.applications.map((app) =>
+            app.application_id === applicationId ? { ...app, application_status: mappedStatus } : app
+          ),
+        }))
+      );
+    } catch {
+      alert("Erro ao atualizar status.");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleFinishApplication = async (applicationId) => {
+    const token = localStorage.getItem("hospitalToken");
+    if (!token) return;
+
+    if (!window.confirm("Deseja finalizar o trabalho desse voluntário?")) return;
+
+    try {
+      setUpdatingId(applicationId);
+      await axios.put(
+        `https://healthpoint-backend-production.up.railway.app/hospital/jobs/application/${applicationId}/finish`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
@@ -58,13 +88,15 @@ export default function HospitalDashboard() {
           ...job,
           applications: job.applications.map((app) =>
             app.application_id === applicationId
-              ? { ...app, application_status: mappedStatus }
+              ? { ...app, application_status: "finished", points_awarded: true }
               : app
           ),
         }))
       );
+
+      alert("Trabalho finalizado com sucesso para este voluntário.");
     } catch {
-      alert("Erro ao atualizar status.");
+      alert("Erro ao finalizar trabalho.");
     } finally {
       setUpdatingId(null);
     }
@@ -78,21 +110,21 @@ export default function HospitalDashboard() {
         return <span className="badge bg-success">Aprovada</span>;
       case "rejected":
         return <span className="badge bg-danger">Rejeitada</span>;
+      case "finished":
+        return <span className="badge bg-secondary">Finalizado</span>;
       default:
-        return <span className="badge bg-secondary">{status}</span>;
+        return <span className="badge bg-dark">{status}</span>;
     }
   };
 
   if (!hospital) {
-    return (
-      <p className="text-center mt-5">Você precisa estar logado para visualizar as vagas.</p>
-    );
+    return <p className="text-center mt-5">Você precisa estar logado para visualizar as vagas.</p>;
   }
 
   return (
     <div className="container my-5">
       <h1 className="mb-4 text-center">Olá, {hospital?.hospital_name ?? "Hospital"}!</h1>
-      <p className="text-center mb-5">Gerencie suas vagas e receba voluntários.</p>
+      <p className="text-center mb-5">Gerencie suas vagas e acompanhe suas candidaturas.</p>
 
       {loading && (
         <div className="text-center">
@@ -101,13 +133,9 @@ export default function HospitalDashboard() {
         </div>
       )}
 
-      {erro && (
-        <div className="alert alert-danger text-center">{erro}</div>
-      )}
+      {erro && <div className="alert alert-danger text-center">{erro}</div>}
 
-      {!loading && !erro && jobs.length === 0 && (
-        <p className="text-center">Nenhuma vaga encontrada.</p>
-      )}
+      {!loading && !erro && jobs.length === 0 && <p className="text-center">Nenhuma vaga encontrada.</p>}
 
       <div className="row">
         {jobs.map((job) => (
@@ -117,7 +145,9 @@ export default function HospitalDashboard() {
                 <h4 className="card-title">{job.job_title}</h4>
                 <p className="card-subtitle mb-2 text-muted">{job.job_type}</p>
                 <p className="card-text flex-grow-1">{job.job_description}</p>
-                <p><strong>Pontos:</strong> {job.job_points}</p>
+                <p>
+                  <strong>Pontos:</strong> {job.job_points}
+                </p>
 
                 <h5>Candidatos:</h5>
                 {job.applications.length === 0 ? (
@@ -130,29 +160,39 @@ export default function HospitalDashboard() {
                         className="list-group-item d-flex justify-content-between align-items-center flex-wrap"
                       >
                         <div>
-                          <strong>{app.user_name}</strong> ({app.user_email}){" "}
-                          {statusBadge(app.application_status)}
+                          <strong>{app.user_name}</strong> ({app.user_email}) {statusBadge(app.application_status)}{" "}
+                          {app.points_awarded && <span className="badge bg-info ms-2">Pontos atribuídos</span>}
                         </div>
-                        {app.application_status === "pending" && (
-                          <div className="btn-group btn-group-sm" role="group" aria-label="Status actions">
+                        <div className="d-flex gap-2">
+                          {app.application_status === "pending" && (
+                            <>
+                              <button
+                                className="btn btn-success btn-sm"
+                                onClick={() => handleUpdateStatus(app.application_id, "aceita")}
+                                disabled={updatingId === app.application_id}
+                              >
+                                Aceitar
+                              </button>
+                              <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => handleUpdateStatus(app.application_id, "rejeitada")}
+                                disabled={updatingId === app.application_id}
+                              >
+                                Rejeitar
+                              </button>
+                            </>
+                          )}
+
+                          {app.application_status === "approved" && !app.points_awarded && (
                             <button
-                              className="btn btn-success"
-                              onClick={() => handleUpdateStatus(app.application_id, "aceita")}
+                              className="btn btn-secondary btn-sm"
+                              onClick={() => handleFinishApplication(app.application_id)}
                               disabled={updatingId === app.application_id}
-                              title="Aceitar"
                             >
-                              Aceitar
+                              {updatingId === app.application_id ? "Finalizando..." : "Finalizar trabalho"}
                             </button>
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => handleUpdateStatus(app.application_id, "rejeitada")}
-                              disabled={updatingId === app.application_id}
-                              title="Rejeitar"
-                            >
-                              Rejeitar
-                            </button>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </li>
                     ))}
                   </ul>
