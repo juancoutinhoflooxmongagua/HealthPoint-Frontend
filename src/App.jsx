@@ -41,8 +41,8 @@ import HospitalLogin from "./Views/App/hospital/HospitalLogin";
 import NewJob from "./Views/App/Jobs/NewJob";
 import HospitalProfile from "./Views/App/hospital/HospitalProfile";
 import HospitalHome from "./Views/App/hospital/HospitalHome";
-import Patients from "./Views/App/hospital/Patients";
-import NewPatient from "./Views/App/hospital/newPatient";
+import Patients from "./Views/App/hospital/Patient/Patients";
+import NewPatient from "./Views/App/hospital/Patient/newPatient";
 
 export default function App() {
   return (
@@ -55,30 +55,24 @@ export default function App() {
               <div className="main fade-in">
                 <Routes>
 
-                  {/* 🔓 Rotas Públicas (Sem Sidebar) */}
-                  <Route path="/" element={<Home />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/HospitalLogin" element={<HospitalLogin />} />
                   <Route path="/NewHospital" element={<NewHospital />} />
 
-                  {/* 🔒 Rotas Protegidas com Sidebar (Usuário, Hospital ou Admin) */}
                   <Route element={<SidebarLayout />}>
-
-                    {/* 🧑‍💼 Usuário */}
+                  <Route path="/" element={<Home />} />
                     <Route path="/UserProfile" element={<UserProfile />} />
                     <Route path="/Jobs" element={<Jobs />} />
                     <Route path="/Jobs/:id" element={<Jobs />} />
                     <Route path="/Leaderboard" element={<Leaderboard />} />
 
-                    {/* 🏥 Hospital */}
                     <Route path="/HospitalHome" element={<HospitalHome />} />
                     <Route path="/HospitalProfile" element={<HospitalProfile />} />
                     <Route path="/NewJob" element={<NewJob />} />
                     <Route path="/Patients" element={<Patients />} />
                     <Route path="/NewPatients" element={<NewPatient />} />
 
-                    {/* 🛠️ Admin */}
                     <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
                     <Route path="/SearchUsers" element={<SearchUsers />} />
                     <Route path="/Application" element={<Application />} />
@@ -86,7 +80,6 @@ export default function App() {
                     <Route path="/Requests" element={<Requests />} />
                     <Route path="/Hospital" element={<Hospital />} />
 
-                    {/* 🔔 Gerais */}
                     <Route path="/Notifications" element={<NotificationsPage />} />
                     <Route path="/Config" element={<ConfigPage />} />
 

@@ -1,5 +1,5 @@
 import HospitalDashboard from "./HospitalDashboard"
-import Patients from "./Patients"
+import Patients from "./Patient/Patients"
 
 export default function HospitalHome(){
     return (

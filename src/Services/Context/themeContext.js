@@ -4,17 +4,20 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);
-    document.body.className = theme; // Aplica a classe no <body> para o CSS customizado funcionar
+    document.body.className = theme;
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () =>
-    setTheme((prev) =>
-      prev === "light" ? "dark" : prev === "dark" ? "frutiger" : "light"
-    );
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : theme === "dark" ? "frutiger" : "light";
+    setTheme(newTheme);
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

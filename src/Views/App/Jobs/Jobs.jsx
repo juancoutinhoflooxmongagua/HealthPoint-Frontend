@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useTheme } from "../../../Services/Context/themeContext";
 
 export default function Jobs() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,18 +15,18 @@ export default function Jobs() {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem("token");
-
         if (!token) {
           setError("Token não encontrado. Por favor, faça login.");
           setLoading(false);
           return;
         }
 
-        const response = await axios.get("https://healthpoint-backend-production.up.railway.app/jobs", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://healthpoint-backend-production.up.railway.app/jobs",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         setJobs(response.data);
         setLoading(false);
@@ -43,11 +47,7 @@ export default function Jobs() {
       await axios.post(
         `https://healthpoint-backend-production.up.railway.app/apply/${job_id}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert(`✅ Você se candidatou para a vaga de ${job_title}`);
@@ -62,79 +62,66 @@ export default function Jobs() {
     }
   };
 
-  if (loading) {
+  if (loading)
     return (
-      <div style={{ textAlign: "center", color: "#007bff", fontWeight: "bold", padding: "2rem" }}>
-        Carregando...
-      </div>
+      <div className="text-center text-primary fw-bold py-5">Carregando...</div>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
-      <div style={{ textAlign: "center", color: "red", padding: "2rem" }}>
-        {error}
-      </div>
+      <div className="text-center text-danger fw-bold py-5">{error}</div>
     );
-  }
 
   return (
-    <main style={{ maxWidth: 1200, margin: "2rem auto", padding: "0 1rem", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "2rem" }}>Vagas</h1>
+    <main className={`container my-5 ${isDark ? "text-light" : "text-dark"}`}>
+      <h1 className="text-center mb-4 fw-bold">Vagas Disponíveis</h1>
 
       {jobs.length === 0 ? (
-        <p style={{ textAlign: "center", color: "#555" }}>Nenhuma vaga encontrada.</p>
+        <p className="text-center text-muted">Nenhuma vaga encontrada.</p>
       ) : (
         <div
+          className="d-grid gap-4"
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
           }}
         >
           {jobs.map((job) => (
             <div
               key={job.job_id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: 10,
-                padding: "1rem",
-                boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                backgroundColor: "#fafafa",
-              }}
+              className={`p-4 rounded-3 border ${
+                isDark ? "bg-dark border-secondary" : "bg-white border-light"
+              } shadow-sm d-flex flex-column justify-content-between`}
+              style={{ height: "100%" }}
             >
               <div>
-                <h2 style={{ margin: "0 0 0.5rem 0", fontSize: "1.25rem", color: "#222" }}>
-                  {job.job_title}
-                </h2>
-                <p style={{ color: "#555", flexGrow: 1 }}>{job.job_description}</p>
-                <p style={{ color: "#666", fontSize: "0.9rem", marginTop: "1rem" }}>
-                  🏥 {job.hospital_name}
-                </p>
-                <p style={{ color: "#666", fontSize: "0.9rem" }}>
-                  ⭐ {job.job_points} Pontos
-                </p>
+                <h5 className="fw-bold mb-2">{job.job_title}</h5>
+                <p style={{ whiteSpace: "pre-wrap" }}>{job.job_description}</p>
               </div>
 
-              <button
-                onClick={() => handleApply(job.job_id, job.job_title)}
-                disabled={applyingJobId === job.job_id}
-                style={{
-                  marginTop: "1rem",
-                  padding: "0.5rem",
-                  backgroundColor: applyingJobId === job.job_id ? "#999" : "#007bff",
-                  color: "white",
-                  border: "none",
-                  borderRadius: 5,
-                  cursor: applyingJobId === job.job_id ? "not-allowed" : "pointer",
-                  fontWeight: "bold",
-                }}
-              >
-                {applyingJobId === job.job_id ? "Aplicando..." : "Aplicar"}
-              </button>
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                  <div className="small text-muted">
+                    🏥 {job.hospital_name}
+                  </div>
+                  <div className="small text-muted">
+                    ⭐ {job.job_points} Pontos
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => handleApply(job.job_id, job.job_title)}
+                  disabled={applyingJobId === job.job_id}
+                  className={`btn fw-semibold ${
+                    applyingJobId === job.job_id
+                      ? "btn-secondary"
+                      : isDark
+                      ? "btn-outline-light"
+                      : "btn-primary"
+                  }`}
+                >
+                  {applyingJobId === job.job_id ? "Aplicando..." : "Aplicar"}
+                </button>
+              </div>
             </div>
           ))}
         </div>
