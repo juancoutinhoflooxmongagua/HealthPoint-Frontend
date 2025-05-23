@@ -29,20 +29,20 @@ import Leaderboard from "./Views/App/Jobs/Leaderboard";
 
 // Admin
 import SearchUsers from "./Views/App/Admin/SearchUsers";
-import Hospital from "./Views/App/hospital/Hospital.jsx";
-import NewHospital from "./Views/App/hospital/NewHospital";
+import Hospital from "./Views/App/Hospital/Hospital.jsx";
+import NewHospital from "./Views/App/Hospital/NewHospital";
 import DashboardAdmin from "./Views/App/Admin/DashboardAdmin";
 import Statistics from "./Views/App/Admin/Statistics";
 import Requests from "./Views/App/Admin/Requests";
 import Application from "./Views/App/Admin/application";
 
 // Hospital
-import HospitalLogin from "./Views/App/hospital/HospitalLogin";
+import HospitalLogin from "./Views/App/Hospital/HospitalLogin";
 import NewJob from "./Views/App/Jobs/NewJob";
-import HospitalProfile from "./Views/App/hospital/HospitalProfile";
-import HospitalHome from "./Views/App/hospital/HospitalHome";
-import Patients from "./Views/App/hospital/Patient/Patients";
-import NewPatient from "./Views/App/hospital/Patient/newPatient";
+import HospitalProfile from "./Views/App/Hospital/HospitalProfile";
+import HospitalHome from "./Views/App/Hospital/HospitalHome";
+import Patients from "./Views/App/Hospital/Patient/Patients";
+import NewPatient from "./Views/App/Hospital/Patient/newPatient";
 
 export default function App() {
   return (

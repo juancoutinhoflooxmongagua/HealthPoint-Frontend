@@ -3,7 +3,7 @@ import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 import { AuthContext } from "../../../Services/Context/authContext";
 
 import UserDashboard from "../Users/UserDashboard";
-import HospitalDashboard from "../hospital/HospitalDashboard";
+import HospitalDashboard from "../Hospital/HospitalDashboard";
 
 import AdminDashboard from "../Admin/AdminDashboard";
 
