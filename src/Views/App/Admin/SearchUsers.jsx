@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UsersTradutor from "../Components/i18n/usersTradutor";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function UsersOfSystem() {
   const [users, setUsers] = useState([]);

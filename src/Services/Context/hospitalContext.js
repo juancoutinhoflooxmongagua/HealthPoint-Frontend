@@ -6,7 +6,7 @@ export const HospitalAuthContext = createContext();
 export function HospitalAuthProvider({ children }) {
   const [hospital, setHospital] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("hospitalToken") || null);
-  const [isLoading, setIsLoading] = useState(true); // NOVO: para controle de carregamento
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchHospitalProfile = async (tokenToUse) => {
     try {

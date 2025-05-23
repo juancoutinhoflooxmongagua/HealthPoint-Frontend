@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Application() {
   const [formData, setFormData] = useState({

@@ -25,9 +25,12 @@ export default function HospitalDashboard() {
         }
       );
       setJobs(response.data);
-      if (response.data.length > 0) setOpenJobId(response.data[0].job_id); 
+      if (response.data.length > 0) setOpenJobId(response.data[0].job_id);
     } catch (error) {
-      setErro(error.response?.data?.error || "Erro ao buscar vagas, tente novamente.");
+      setErro(
+        error.response?.data?.error ||
+          "Erro ao buscar vagas, tente novamente."
+      );
     } finally {
       setLoading(false);
     }
@@ -42,7 +45,11 @@ export default function HospitalDashboard() {
     if (!token) return;
 
     const mappedStatus =
-      newStatus === "aceita" ? "approved" : newStatus === "rejeitada" ? "rejected" : newStatus;
+      newStatus === "aceita"
+        ? "approved"
+        : newStatus === "rejeitada"
+        ? "rejected"
+        : newStatus;
 
     try {
       setUpdatingId(applicationId);
@@ -58,7 +65,9 @@ export default function HospitalDashboard() {
         prevJobs.map((job) => ({
           ...job,
           applications: job.applications.map((app) =>
-            app.application_id === applicationId ? { ...app, application_status: mappedStatus } : app
+            app.application_id === applicationId
+              ? { ...app, application_status: mappedStatus }
+              : app
           ),
         }))
       );
@@ -73,7 +82,8 @@ export default function HospitalDashboard() {
     const token = localStorage.getItem("hospitalToken");
     if (!token) return;
 
-    if (!window.confirm("Deseja finalizar o trabalho desse voluntário?")) return;
+    if (!window.confirm("Deseja finalizar o trabalho desse voluntário?"))
+      return;
 
     try {
       setUpdatingId(applicationId);
@@ -96,7 +106,7 @@ export default function HospitalDashboard() {
         }))
       );
 
-      alert("Trabalho finalizado com sucesso para este voluntário.");
+      alert("Trabalho finalizado com sucesso.");
     } catch {
       alert("Erro ao finalizar trabalho.");
     } finally {
@@ -105,131 +115,177 @@ export default function HospitalDashboard() {
   };
 
   const statusBadge = (status) => {
-    switch (status) {
-      case "pending":
-        return <span className="badge bg-warning text-dark">Pendente</span>;
-      case "approved":
-        return <span className="badge bg-success">Aprovada</span>;
-      case "rejected":
-        return <span className="badge bg-danger">Rejeitada</span>;
-      case "finished":
-        return <span className="badge bg-secondary">Finalizado</span>;
-      default:
-        return <span className="badge bg-dark">{status}</span>;
-    }
+    const styles = {
+      pending: "bg-yellow-100 text-yellow-800",
+      approved: "bg-green-100 text-green-800",
+      rejected: "bg-red-100 text-red-800",
+      finished: "bg-gray-300 text-gray-800",
+    };
+    return (
+      <span
+        className={`px-3 py-1 rounded-full text-sm font-medium ${
+          styles[status] || "bg-gray-200 text-gray-800"
+        }`}
+      >
+        {status === "pending"
+          ? "Pendente"
+          : status === "approved"
+          ? "Aprovada"
+          : status === "rejected"
+          ? "Rejeitada"
+          : status === "finished"
+          ? "Finalizado"
+          : status}
+      </span>
+    );
   };
 
   if (!hospital) {
-    return <p className="text-center mt-5">Você precisa estar logado para visualizar as vagas.</p>;
+    return (
+      <p className="text-center mt-20 text-lg text-gray-500">
+        Você precisa estar logado para visualizar as vagas.
+      </p>
+    );
   }
 
   return (
-    <div className="container my-5">
-      <h1 className="mb-4 text-center">Olá, {hospital?.hospital_name ?? "Hospital"}!</h1>
-      <p className="text-center mb-5">Gerencie suas vagas e acompanhe suas candidaturas.</p>
+    <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold">
+          Olá, {hospital?.hospital_name ?? "Hospital"}!
+        </h1>
+        <p className="text-gray-500">
+          Gerencie suas vagas e acompanhe suas candidaturas.
+        </p>
+      </div>
 
-      <br />
-
-      <h3>Vagas em Aberto</h3>
       {loading && (
-        <div className="text-center">
-          <div className="spinner-border" role="status" aria-hidden="true"></div>
-          <span className="ms-2">Carregando vagas...</span>
+        <div className="flex justify-center items-center h-32">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+          <span className="ml-4 text-gray-500">Carregando vagas...</span>
         </div>
       )}
 
-      {erro && <div className="alert alert-danger text-center">{erro}</div>}
+      {erro && (
+        <div className="bg-red-100 text-red-800 px-4 py-3 rounded-lg text-center mb-4">
+          {erro}
+        </div>
+      )}
 
-      {!loading && !erro && jobs.length === 0 && <p className="text-center">Nenhuma vaga encontrada.</p>}
+      {!loading && jobs.length === 0 && (
+        <p className="text-center text-gray-500">Nenhuma vaga encontrada.</p>
+      )}
 
-      <div className="row gy-4">
+      <div className="space-y-6">
         {jobs.map((job) => (
-          <div key={job.job_id} className="col-12">
-            <div className="card shadow-sm">
-              <div
-                className="card-header d-flex justify-content-between align-items-center"
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  setOpenJobId(openJobId === job.job_id ? null : job.job_id)
-                }
-              >
-                <div>
-                  <h5 className="mb-0">{job.job_title}</h5>
-                  <small className="text-muted">{job.job_type}</small>
-                </div>
-                <div>
-                  <strong>Pontos:</strong> {job.job_points}
-                </div>
+          <div
+            key={job.job_id}
+            className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-lg"
+          >
+            <div
+              className="flex justify-between items-center p-6 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition"
+              onClick={() =>
+                setOpenJobId(openJobId === job.job_id ? null : job.job_id)
+              }
+            >
+              <div>
+                <h2 className="text-xl font-semibold">{job.job_title}</h2>
+                <p className="text-sm text-gray-500">{job.job_type}</p>
               </div>
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Pontos:{" "}
+                  <span className="font-medium text-black dark:text-white">
+                    {job.job_points}
+                  </span>
+                </p>
+              </div>
+            </div>
 
-              {openJobId === job.job_id && (
-                <div className="card-body border-top">
-                  <p>{job.job_description}</p>
-                  <h6>Candidatos:</h6>
-                  {job.applications.length === 0 ? (
-                    <p>Nenhum candidato ainda.</p>
-                  ) : (
-                    <ul className="list-group">
-                      {job.applications.map((app) => (
-                        <li
-                          key={app.application_id}
-                          className="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-                        >
-                          <div>
-                            <strong>{app.user_name}</strong> ({app.user_email}){" "}
-                            {statusBadge(app.application_status)}{" "}
+            {openJobId === job.job_id && (
+              <div className="border-t border-zinc-200 dark:border-zinc-700 p-6 space-y-4">
+                <p className="text-gray-600 dark:text-gray-400">
+                  {job.job_description}
+                </p>
+                <h3 className="font-medium">Candidatos:</h3>
+
+                {job.applications.length === 0 ? (
+                  <p className="text-gray-500">Nenhum candidato ainda.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {job.applications.map((app) => (
+                      <div
+                        key={app.application_id}
+                        className="flex flex-col md:flex-row justify-between items-start md:items-center bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl"
+                      >
+                        <div className="space-y-1">
+                          <p className="font-medium">
+                            {app.user_name}{" "}
+                            <span className="text-gray-500">
+                              ({app.user_email})
+                            </span>
+                          </p>
+                          <div className="flex gap-2 items-center">
+                            {statusBadge(app.application_status)}
                             {app.points_awarded && (
-                              <span className="badge bg-info ms-2">
+                              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
                                 Pontos atribuídos
                               </span>
                             )}
                           </div>
-                          <div className="d-flex gap-2 flex-wrap mt-2 mt-md-0">
-                            {app.application_status === "pending" && (
-                              <>
-                                <button
-                                  className="btn btn-success btn-sm"
-                                  onClick={() =>
-                                    handleUpdateStatus(app.application_id, "aceita")
-                                  }
-                                  disabled={updatingId === app.application_id}
-                                >
-                                  Aceitar
-                                </button>
-                                <button
-                                  className="btn btn-danger btn-sm"
-                                  onClick={() =>
-                                    handleUpdateStatus(app.application_id, "rejeitada")
-                                  }
-                                  disabled={updatingId === app.application_id}
-                                >
-                                  Rejeitar
-                                </button>
-                              </>
-                            )}
+                        </div>
 
-                            {app.application_status === "approved" &&
-                              !app.points_awarded && (
-                                <button
-                                  className="btn btn-secondary btn-sm"
-                                  onClick={() =>
-                                    handleFinishApplication(app.application_id)
-                                  }
-                                  disabled={updatingId === app.application_id}
-                                >
-                                  {updatingId === app.application_id
-                                    ? "Finalizando..."
-                                    : "Finalizar trabalho"}
-                                </button>
-                              )}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
-            </div>
+                        <div className="flex gap-2 mt-4 md:mt-0">
+                          {app.application_status === "pending" && (
+                            <>
+                              <button
+                                className="px-4 py-1.5 rounded-lg bg-green-500 hover:bg-green-600 text-white text-sm"
+                                onClick={() =>
+                                  handleUpdateStatus(
+                                    app.application_id,
+                                    "aceita"
+                                  )
+                                }
+                                disabled={updatingId === app.application_id}
+                              >
+                                Aceitar
+                              </button>
+                              <button
+                                className="px-4 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm"
+                                onClick={() =>
+                                  handleUpdateStatus(
+                                    app.application_id,
+                                    "rejeitada"
+                                  )
+                                }
+                                disabled={updatingId === app.application_id}
+                              >
+                                Rejeitar
+                              </button>
+                            </>
+                          )}
+
+                          {app.application_status === "approved" &&
+                            !app.points_awarded && (
+                              <button
+                                className="px-4 py-1.5 rounded-lg bg-zinc-700 hover:bg-zinc-800 text-white text-sm"
+                                onClick={() =>
+                                  handleFinishApplication(app.application_id)
+                                }
+                                disabled={updatingId === app.application_id}
+                              >
+                                {updatingId === app.application_id
+                                  ? "Finalizando..."
+                                  : "Finalizar trabalho"}
+                              </button>
+                            )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { HospitalAuthContext } from "../../../Services/Context/hospitalContext";
 import { AuthContext } from "../../../Services/Context/authContext";
 import { useTheme } from "../../../Services/Context/themeContext";
@@ -8,89 +8,98 @@ export default function SidebarLayout() {
   const { logoutHospital, hospital } = useContext(HospitalAuthContext);
   const { logoutUser, user } = useContext(AuthContext);
   const { theme } = useTheme();
-
   const isDark = theme === "dark";
 
-  const sidebarClass = `d-flex flex-column flex-shrink-0 p-3 border-end shadow ${
-    isDark ? "bg-dark text-light" : "bg-white"
-  }`;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const mainStyle = {
-    marginLeft: (hospital || user) ? "250px" : "0",
-    width: "100%",
-    padding: "2rem",
-    background: isDark ? "#1e1e1e" : "#f8f9fa",
-    color: isDark ? "#f1f1f1" : "#212529",
-    minHeight: "100vh"
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogout = () => {
-    if (hospital) {
-      logoutHospital();
-    } else if (user) {
-      logoutUser();
-    }
+    if (hospital) logoutHospital();
+    if (user) logoutUser();
   };
 
-  const renderLinks = () => {
-    if (hospital) {
-      return (
-        <>
-          <Link className="nav-link" to="/Notifications">🔔 Notificações</Link>
-          <Link className="nav-link" to="/HospitalHome">🏥 Início Hospital</Link>
-          <Link className="nav-link" to="/HospitalProfile">🩺 Perfil Hospital</Link>
-          <Link className="nav-link" to="/NewJob">➕ Nova Vaga</Link>
-          <Link className="nav-link" to="/NewPatients">🧑‍⚕️ Novo Paciente</Link>
-          <Link className="nav-link" to="/Config">⚙️ Configurações</Link>
-        </>
-      );
-    } else if (user) {
-      return (
-        <>
-          <Link className="nav-link" to="/Notifications">🔔 Notificações</Link>
-          <Link className="nav-link" to="/UserProfile">👤 Meu Perfil</Link>
-          <Link className="nav-link" to="/Jobs">💼 Vagas</Link>
-          <Link className="nav-link" to="/Leaderboard">🏆 Ranking</Link>
-          <Link className="nav-link" to="/Config">⚙️ Configurações</Link>
-        </>
-      );
-    }
-    return null;
-  };
+  const hospitalLinks = [
+    { to: "/Notifications", label: "🔔 Notificações" },
+    { to: "/HospitalHome", label: "🏥 Início" },
+    { to: "/HospitalProfile", label: "🩺 Perfil" },
+    { to: "/NewJob", label: "➕ Nova Vaga" },
+    { to: "/NewPatients", label: "🧑‍⚕️ Novo Paciente" },
+    { to: "/Config", label: "⚙️ Configurações" },
+  ];
+
+  const userLinks = [
+    { to: "/Notifications", label: "🔔 Notificações" },
+    { to: "/UserProfile", label: "👤 Perfil" },
+    { to: "/Jobs", label: "💼 Vagas" },
+    { to: "/Leaderboard", label: "🏆 Ranking" },
+    { to: "/Config", label: "⚙️ Configurações" },
+  ];
+
+  const links = hospital ? hospitalLinks : user ? userLinks : [];
+
+  if (!hospital && !user) return null;
 
   return (
-    <div style={{ display: "flex" }}>
-      {(hospital || user) && (
-        <aside
-          className={sidebarClass}
-          style={{
-            width: "250px",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            zIndex: 1000
-          }}
+    <>
+      {isMobile && (
+        <button
+          className={`fixed top-4 left-4 z-50 p-2 rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 shadow-md md:hidden`}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle sidebar"
         >
-          <div>
-            <h4 className="mb-4">Painel</h4>
-            <nav className="nav nav-pills flex-column">
-              {renderLinks()}
-            </nav>
-          </div>
+          {sidebarOpen ? '✕' : '☰'}
+        </button>
+      )}
 
+      <aside
+        className={`
+          fixed top-0 left-0 z-40 h-full w-64 pt-20
+          bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+          border-r border-gray-200 dark:border-gray-700
+          transition-transform duration-300 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0
+        `}
+      >
+        <div className="h-full overflow-y-auto px-6 pb-4">
+          <h2 className="text-2xl font-semibold mb-8">Painel</h2>
+          <nav>
+            <ul className="space-y-4">
+              {links.map(({ to, label }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    onClick={() => isMobile && setSidebarOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <button
             onClick={handleLogout}
-            className={`btn ${isDark ? "btn-outline-light" : "btn-outline-danger"} mt-4`}
+            className="mt-10 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded transition"
           >
             🚪 Sair
           </button>
-        </aside>
-      )}
-
-      <main style={mainStyle}>
-        <Outlet />
-      </main>
-    </div>
+        </div>
+      </aside>
+    </>
   );
 }

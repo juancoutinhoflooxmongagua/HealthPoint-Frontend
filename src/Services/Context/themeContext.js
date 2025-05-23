@@ -1,4 +1,3 @@
-// Services/Context/themeContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext();
@@ -9,14 +8,17 @@ export const ThemeProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-bs-theme", theme);
-    document.body.className = theme;
+    const root = window.document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : theme === "dark" ? "frutiger" : "light";
-    setTheme(newTheme);
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   return (
