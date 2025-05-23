@@ -29,7 +29,7 @@ import Leaderboard from "./Views/App/Jobs/Leaderboard";
 
 // Admin
 import SearchUsers from "./Views/App/Admin/SearchUsers";
-import Hospital from "./Views/App/hospital/Hospital";
+import Hospital from "./Views/App/hospital/Hospital.jsx";
 import NewHospital from "./Views/App/hospital/NewHospital";
 import DashboardAdmin from "./Views/App/Admin/DashboardAdmin";
 import Statistics from "./Views/App/Admin/Statistics";
